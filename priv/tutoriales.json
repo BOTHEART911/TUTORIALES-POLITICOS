@@ -29,11 +29,11 @@
     "salir",
     "robot"
    ],
-   "youtube": "",
-   "short": "",
+   "youtube": "https://youtu.be/zptxdM9XXn8",
+   "short": "https://youtube.com/shorts/xv-2PJS6hCs",
    "shortImg": "priv/img/P01v.jpg",
    "duracion": "1:44",
-   "activo": false
+   "activo": true
   },
   {
    "id": "P02",
