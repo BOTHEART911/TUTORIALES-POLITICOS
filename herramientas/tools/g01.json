@@ -1,0 +1,73 @@
+{
+ "id": "T01",
+ "titulo": "Entra a PRIV",
+ "sub": "Instalar, PIN e Inicio",
+ "num": 1,
+ "siguiente": "Busca y agrega en la base de datos",
+ "escenas": [
+  {
+   "id": "s1",
+   "voz": "Este es el panel privado de la campaña, donde trabaja todo el equipo. Te enseño a entrar y a moverte en él.",
+   "zoom": 1.0
+  },
+  {
+   "id": "s2",
+   "voz": "Abre el enlace que te enviaron e instala la aplicación. En el computador, toca Instalar aplicación. En el iPhone, usa Compartir y luego Agregar a inicio.",
+   "zoom": 1.15
+  },
+  {
+   "id": "s3",
+   "voz": "Para entrar, escribe tu PIN de cuatro números. Te lo da el administrador de la campaña. Si te equivocas, la app te avisa.",
+   "zoom": 1.6
+  },
+  {
+   "id": "s4",
+   "voz": "Escríbelo de nuevo. Al completar el cuarto número, entras solo, sin tocar más botones.",
+   "zoom": 1.6
+  },
+  {
+   "id": "s5",
+   "voz": "Este es tu Inicio. Arriba ves tu nombre y tu rol, y abajo los módulos que puedes usar. Si eres invitado, solo te salen los que te asignaron.",
+   "zoom": 1.25
+  },
+  {
+   "id": "s6",
+   "voz": "Toca tu círculo para poner tu foto. Elige una imagen y guárdala: así el equipo te reconoce.",
+   "zoom": 1.5
+  },
+  {
+   "id": "s7",
+   "voz": "Entra a un módulo, por ejemplo Base de datos. El botón Analizar es el robot: toca Iniciar y te resume lo más importante de la vista. También puedes borrar esa palabra y hacerle tu propia pregunta.",
+   "zoom": 1.35
+  },
+  {
+   "id": "s8",
+   "voz": "Para ir a otra vista sin volver al Inicio, usa el botón de los cuadritos. Elige a dónde vas, por ejemplo la Agenda.",
+   "zoom": 1.3
+  },
+  {
+   "id": "s9",
+   "voz": "Si en este equipo entran varias personas, cambia de cuenta desde el Inicio. Con la equis quitas una cuenta de este equipo.",
+   "zoom": 1.4
+  },
+  {
+   "id": "s10",
+   "voz": "Cuando termines, toca Salir. La app vuelve a pedir el PIN y tus datos quedan protegidos.",
+   "zoom": 1.3
+  }
+ ],
+ "mini": {
+  "texto": "¿Cómo entro?",
+  "linea2": "Instalar, PIN e Inicio",
+  "escena_h": "s4",
+  "q_h": 0.45,
+  "recorte_h": [
+   0.33,
+   0.0,
+   0.67,
+   0.82
+  ],
+  "escena_v": "s4",
+  "q_v": 0.45
+ }
+}
