@@ -1,0 +1,279 @@
+{
+ "version": 1,
+ "actualizado": "2026-11-22",
+ "app": "PRIV",
+ "temas": [
+  "Primeros pasos",
+  "Base de datos",
+  "Líderes",
+  "Gestión",
+  "Análisis",
+  "Administración"
+ ],
+ "tutoriales": [
+  {
+   "id": "P01",
+   "orden": 1,
+   "tema": "Primeros pasos",
+   "titulo": "Entra a PRIV y muévete",
+   "descripcion": "Instalar, PIN, Inicio, tu foto, el robot, saltar entre vistas, cambiar de cuenta y salir.",
+   "rutas": [
+    "home"
+   ],
+   "palabras": [
+    "entrar",
+    "pin",
+    "instalar",
+    "foto",
+    "cuenta",
+    "salir",
+    "robot"
+   ],
+   "youtube": "",
+   "short": "",
+   "shortImg": "priv/img/P01v.jpg",
+   "duracion": "1:44",
+   "activo": false
+  },
+  {
+   "id": "P02",
+   "orden": 2,
+   "tema": "Base de datos",
+   "titulo": "Busca y agrega",
+   "descripcion": "Buscador, pastillas y conteos, agregar un contacto y consultar su puesto.",
+   "rutas": [
+    "bd"
+   ],
+   "palabras": [
+    "buscar",
+    "filtrar",
+    "agregar",
+    "contacto",
+    "puesto"
+   ],
+   "youtube": "",
+   "short": "",
+   "shortImg": "",
+   "duracion": "",
+   "activo": false
+  },
+  {
+   "id": "P03",
+   "orden": 3,
+   "tema": "Base de datos",
+   "titulo": "Ficha, por confirmar y validación",
+   "descripcion": "Detalles y trazabilidad, editar, por confirmar con motivo, validación de los líderes y Por eliminar.",
+   "rutas": [
+    "bd"
+   ],
+   "palabras": [
+    "detalles",
+    "editar",
+    "por confirmar",
+    "validación",
+    "eliminar"
+   ],
+   "youtube": "",
+   "short": "",
+   "shortImg": "",
+   "duracion": "",
+   "activo": false
+  },
+  {
+   "id": "P04",
+   "orden": 4,
+   "tema": "Base de datos",
+   "titulo": "En bloque y sin señal",
+   "descripcion": "Carga y actualización masiva, reasignar líder, registrar sin internet, exportar, memoria y balance.",
+   "rutas": [
+    "bd"
+   ],
+   "palabras": [
+    "masivo",
+    "excel",
+    "sin señal",
+    "pendientes",
+    "exportar",
+    "memoria",
+    "balance"
+   ],
+   "youtube": "",
+   "short": "",
+   "shortImg": "",
+   "duracion": "",
+   "activo": false
+  },
+  {
+   "id": "P05",
+   "orden": 5,
+   "tema": "Líderes",
+   "titulo": "Registra y administra líderes",
+   "descripcion": "Agregar, tipo de líder, editar, tablero de puntaje y eliminar traspasando referidos.",
+   "rutas": [
+    "lideres"
+   ],
+   "palabras": [
+    "líder",
+    "tablero",
+    "eliminar líder",
+    "traspasar"
+   ],
+   "youtube": "",
+   "short": "",
+   "shortImg": "",
+   "duracion": "",
+   "activo": false
+  },
+  {
+   "id": "P06",
+   "orden": 6,
+   "tema": "Líderes",
+   "titulo": "Referidos, mensajes y bitácoras",
+   "descripcion": "Referidos, mensajes por WhatsApp o bot, ahijados y bitácoras.",
+   "rutas": [
+    "lideres"
+   ],
+   "palabras": [
+    "referidos",
+    "mensajes",
+    "bitácora",
+    "ahijados"
+   ],
+   "youtube": "",
+   "short": "",
+   "shortImg": "",
+   "duracion": "",
+   "activo": false
+  },
+  {
+   "id": "P07",
+   "orden": 7,
+   "tema": "Gestión",
+   "titulo": "Agenda y eventos",
+   "descripcion": "Reuniones (agregar, avisar, realizada, reprogramar) y eventos con asistentes.",
+   "rutas": [
+    "agenda",
+    "eventos"
+   ],
+   "palabras": [
+    "agenda",
+    "reunión",
+    "evento",
+    "asistentes"
+   ],
+   "youtube": "",
+   "short": "",
+   "shortImg": "",
+   "duracion": "",
+   "activo": false
+  },
+  {
+   "id": "P08",
+   "orden": 8,
+   "tema": "Gestión",
+   "titulo": "Compromisos y solicitudes",
+   "descripcion": "Estados, envíos y paso de una a otra.",
+   "rutas": [
+    "compromisos",
+    "solicitudes"
+   ],
+   "palabras": [
+    "compromiso",
+    "solicitud",
+    "estado"
+   ],
+   "youtube": "",
+   "short": "",
+   "shortImg": "",
+   "duracion": "",
+   "activo": false
+  },
+  {
+   "id": "P09",
+   "orden": 9,
+   "tema": "Gestión",
+   "titulo": "Formularios y Ponte al día",
+   "descripcion": "Crear y publicar un formulario, confirmar inscritos y publicar una noticia.",
+   "rutas": [
+    "formularios",
+    "notificaciones"
+   ],
+   "palabras": [
+    "formulario",
+    "inscritos",
+    "noticia",
+    "ponte al día"
+   ],
+   "youtube": "",
+   "short": "",
+   "shortImg": "",
+   "duracion": "",
+   "activo": false
+  },
+  {
+   "id": "P10",
+   "orden": 10,
+   "tema": "Análisis",
+   "titulo": "Mide la campaña",
+   "descripcion": "Dashboard, Simulador, Votación en vivo y Análisis de procesos.",
+   "rutas": [
+    "dashboard",
+    "simulador",
+    "votacion",
+    "analisis"
+   ],
+   "palabras": [
+    "dashboard",
+    "simulador",
+    "votación",
+    "análisis"
+   ],
+   "youtube": "",
+   "short": "",
+   "shortImg": "",
+   "duracion": "",
+   "activo": false
+  },
+  {
+   "id": "P11",
+   "orden": 11,
+   "tema": "Administración",
+   "titulo": "Usuarios, invitados y configuración",
+   "descripcion": "Usuarios con PIN, pastillas del invitado y pestañas de Configuración.",
+   "rutas": [
+    "config"
+   ],
+   "palabras": [
+    "usuarios",
+    "invitado",
+    "permisos",
+    "configuración"
+   ],
+   "youtube": "",
+   "short": "",
+   "shortImg": "",
+   "duracion": "",
+   "activo": false
+  },
+  {
+   "id": "P12",
+   "orden": 12,
+   "tema": "Administración",
+   "titulo": "Mi Bot de WhatsApp",
+   "descripcion": "Conectar con QR, controles y bloqueos.",
+   "rutas": [
+    "mibot"
+   ],
+   "palabras": [
+    "bot",
+    "whatsapp",
+    "qr"
+   ],
+   "youtube": "",
+   "short": "",
+   "shortImg": "",
+   "duracion": "",
+   "activo": false
+  }
+ ]
+}
