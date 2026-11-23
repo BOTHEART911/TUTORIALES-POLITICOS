@@ -156,6 +156,7 @@ function apiPrivTutGuardar_(p) {
     var cur = tutGh_('GET', RUTA);
     if (cur.code !== 200 || !cur.json) return { ok: false, msg: 'No se pudo leer la lista en GitHub (' + cur.code + ')' };
     var remota = JSON.parse(Utilities.newBlob(Utilities.base64Decode(String(cur.json.content).replace(/\s/g, ''))).getDataAsString('UTF-8'));
+    if (remota.app && lista.app && String(remota.app) !== String(lista.app)) return { ok: false, msg: 'Esa lista no corresponde a esta pestaña' };
     if (String(remota.version) !== String(p.base)) return { ok: false, conflicto: true, msg: 'La lista cambió mientras editabas' };
 
     lista.version = (parseInt(remota.version, 10) || 0) + 1;
