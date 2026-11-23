@@ -105,6 +105,16 @@ def _agenda():
 
 
 AGENDA = _agenda()
+for _k, (_t, _l, _c, _i, _f) in enumerate([('Reunión con la junta de acción comunal', 'El Prado', 'Rosa León', '09:00', '10:30'), ('Visita a comerciantes del Centro', 'Centro', 'Paola Vargas', '15:30', '17:00')]):
+    AGENDA.append({'id': 'AG1%02d' % _k, 'fecha': _fecha(dt.date.today()), 'inicia': _i, 'termina': _f, 'titulo': _t, 'lugar': _l, 'contacto': _c, 'estado': 'PROGRAMADA'})
+for _a in AGENDA: _a.update({'telefono': '573005551' + str(100 + len(_a['id'])), 'detalles': 'Frente al parque principal', 'mensaje': 'Te esperamos puntual.', 'bitacora': '', 'idCalendar': 'cal', 'creada': _fecha(dt.date.today())})
+EVENTOS = [{'id': str(30 + k), 'evento': e, 'fecha': _fecha(dt.date.today() + dt.timedelta(days=d)), 'inicia': i, 'termina': f, 'lugar': l, 'contacto': c, 'telefono': '573005552' + str(300 + k),
+            'asistentes': a, 'estado': est, 'creada': _fecha(dt.date.today() - dt.timedelta(days=10)), 'mensaje': '', 'bitacora': ''}
+           for k, (e, d, i, f, l, c, a, est) in enumerate([
+               ('Gran encuentro de líderes', -12, '16:00', '19:00', 'Centro', 'Ana Rojas Peña', 86, 'TERMINADO'),
+               ('Jornada de salud', -3, '08:00', '12:00', 'El Prado', 'Jorge Castro León', 54, 'TERMINADO'),
+               ('Foro con jóvenes', 0, '18:00', '20:00', 'Las Palmas', 'Camila Peña Torres', 23, 'CORRIENDO'),
+               ('Caminata por la vereda El Llano', 6, '07:00', '11:00', 'Vereda El Llano', 'Felipe Ortiz Ríos', 0, 'PROGRAMADO')])]
 
 
 def _user(u, tk='tk-ejemplo'):
@@ -200,7 +210,33 @@ def responder(accion, params, cuerpo):
     if accion == 'priv.agenda':
         return {'ok': True, 'items': AGENDA, 'estricta': False, 'esDev': False}
     if accion == 'priv.agendaMeta':
-        return {'ok': True, 'candidato': {'nombre': 'Candidato Ejemplo'}, 'plantillas': {}}
+        return {'ok': True, 'candidato': {'nombre': 'Candidato Ejemplo', 'pnombre': 'Candidato', 'wa': '573005559999'}, 'manejo': 'Laura',
+                'plantillas': {'resumen': 'Hola {pn_candidato}, {tiempo} 👋\nEstas son tus reuniones de {jornada}:\n{lista_reuniones}\n\nAgenda: {u_agenda}',
+                               'aviso': '🔔 AVISO\n{bloque_aviso}', 'previa': '⏰ En 30 minutos:\n{bloque_aviso}', 'decision': '⚠️ Necesitamos tu decisión sobre:\n{bloque_aviso}',
+                               'directo': 'Hola {contacto} 👋 Te confirmamos la reunión con {n_candidato}:\n🗓️ {fecha_larga} · {hora_inicio} a {hora_fin}\n📍 {lugar}\n{detalles}\n{mensaje}'}}
+    if accion == 'priv.reunionMeta':
+        return {'ok': True, 'invitados': 2}
+    if accion == 'priv.reunionGuardar':
+        c = dict(p, id='AG2%02d' % len(AGENDA), estado='PROGRAMADA', idCalendar='cal', creada=_fecha(dt.date.today())); c.pop('caller', None)
+        AGENDA.append(c); return {'ok': True, 'card': c}
+    if accion == 'priv.reunionVer':
+        return {'ok': True, 'reunion': next(x for x in AGENDA if str(x['id']) == str(p.get('id')))}
+    if accion == 'priv.reunionEstado':
+        c = next(x for x in AGENDA if str(x['id']) == str(p.get('id'))); c['estado'] = p.get('estado'); return {'ok': True, 'card': c}
+    if accion == 'priv.eventos':
+        return {'ok': True, 'items': EVENTOS}
+    if accion == 'priv.eventoVer':
+        return {'ok': True, 'evento': next(x for x in EVENTOS if str(x['id']) == str(p.get('id')))}
+    if accion == 'priv.eventoAsistentes':
+        its = [{'nombre': x['nombre'], 'documento': x['documento'], 'contacto': x.get('telefono', ''), 'fecha': _fecha(dt.date.today() - dt.timedelta(days=3)) + ' 08:%02d' % (5 + k)} for k, x in enumerate(PERSONAS[:24])]
+        return {'ok': True, 'items': its}
+    if accion == 'priv.eventoMeta':
+        return {'ok': True}
+    if accion == 'priv.eventoGuardar':
+        c = dict(p, id=str(30 + len(EVENTOS)), evento=p.get('evento') or p.get('nombre', ''), asistentes=0, estado='PROGRAMADO', creada=_fecha(dt.date.today())); c.pop('caller', None)
+        EVENTOS.insert(0, c); return {'ok': True, 'card': c}
+    if accion == 'priv.eventoEstado':
+        c = next(x for x in EVENTOS if str(x['id']) == str(p.get('id'))); c['estado'] = p.get('estado'); return {'ok': True, 'card': c}
     if accion == 'priv.iaEstado':
         return {'ok': True, 'configurada': True}
     if accion == 'priv.vozEstado':

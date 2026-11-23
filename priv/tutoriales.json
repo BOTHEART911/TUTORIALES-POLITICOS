@@ -153,7 +153,7 @@
    "orden": 7,
    "tema": "Gestión",
    "titulo": "Agenda y eventos",
-   "descripcion": "Reuniones (agregar, avisar, realizada, reprogramar) y eventos con asistentes.",
+   "descripcion": "Calendario por estados, agregar reunión (Google Calendar), mensaje directo, avisar al candidato, resumen del día y eventos con asistentes.",
    "rutas": [
     "agenda",
     "eventos"
@@ -166,8 +166,8 @@
    ],
    "youtube": "",
    "short": "",
-   "shortImg": "",
-   "duracion": "",
+   "shortImg": "priv/img/P07v.jpg",
+   "duracion": "1:56",
    "activo": false
   },
   {

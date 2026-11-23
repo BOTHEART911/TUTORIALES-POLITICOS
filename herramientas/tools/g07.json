@@ -1,0 +1,63 @@
+{
+ "id": "T07",
+ "titulo": "Agenda y eventos",
+ "sub": "Reuniones del candidato y eventos de la campaña",
+ "num": 7,
+ "siguiente": "Compromisos y solicitudes",
+ "escenas": [
+  {
+   "id": "s1",
+   "zoom": 1.15,
+   "voz": "La Agenda muestra las reuniones del candidato en un calendario. Cada día lleva barras de color por estado: programada, a reprogramar y realizada. Puedes verla por año, por mes o por día, y buscar una reunión por título, lugar o contacto."
+  },
+  {
+   "id": "s2",
+   "zoom": 1.35,
+   "voz": "Para agregar una reunión, toca un día libre. Escribe el título, el lugar, el contacto y su teléfono, la hora de inicio y de fin, y el mensaje para la persona. Toca Crear reunión: queda en la agenda y en el calendario de Google del equipo."
+  },
+  {
+   "id": "s3",
+   "zoom": 1.35,
+   "voz": "Toca un día con reuniones para ver la lista, y toca una para abrir su detalle. Con Mensaje directo le escribes a la persona por WhatsApp con la confirmación lista: fecha, hora y lugar."
+  },
+  {
+   "id": "s4",
+   "zoom": 1.35,
+   "voz": "Con Avisar le escribes al candidato: un aviso, una previa antes de la reunión o una decisión que debe tomar. Cuando la reunión termine, márcala como Realizada; si se cae, A reprogramar."
+  },
+  {
+   "id": "s5",
+   "zoom": 1.35,
+   "voz": "Los íconos de mañana, tarde y noche arman el resumen de las reuniones programadas de hoy en esa jornada y lo envían al WhatsApp del candidato."
+  },
+  {
+   "id": "s6",
+   "zoom": 1.2,
+   "voz": "En Eventos están las reuniones generales de la campaña. Las pastillas filtran por estado: programado, corriendo o terminado, y cada tarjeta muestra cuántos asistentes tiene. Con Agregar creas uno nuevo, igual que en la Agenda."
+  },
+  {
+   "id": "s7",
+   "zoom": 1.3,
+   "voz": "En el detalle del evento ves sus asistentes, registrados con la app de Asistencias al escanear su código, y los descargas en Excel. Con el botón de estado lo pasas a corriendo o a terminado."
+  },
+  {
+   "id": "s8",
+   "zoom": 1.0,
+   "voz": "Así la agenda del candidato y los eventos de la campaña quedan organizados y a la vista de todo el equipo."
+  }
+ ],
+ "mini": {
+  "texto": "La agenda, bajo control",
+  "linea2": "Reuniones y eventos",
+  "escena_h": "s1",
+  "q_h": 0.5,
+  "recorte_h": [
+   0.05,
+   0.08,
+   0.95,
+   0.98
+  ],
+  "escena_v": "s1",
+  "q_v": 0.4
+ }
+}
