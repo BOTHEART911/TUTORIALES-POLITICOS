@@ -146,11 +146,14 @@ function apiPrivTutGuardar_(p) {
   var lista;
   try { lista = JSON.parse(String(p.lista || '')); } catch (e) { return { ok: false, msg: 'La lista no es válida' }; }
   if (!lista || !(lista.tutoriales instanceof Array)) return { ok: false, msg: 'La lista no es válida' };
+  /* 23/11/2026 · cual=lideres → la lista de la zona de líderes (lideres/tutoriales.json) */
+  var CUAL = String(p.cual || '') === 'lideres' ? 'lideres' : 'priv';
+  var RUTA = CUAL + '/tutoriales.json';
 
   var lock = LockService.getScriptLock();
   lock.waitLock(20000);
   try {
-    var cur = tutGh_('GET', TUT_RUTA);
+    var cur = tutGh_('GET', RUTA);
     if (cur.code !== 200 || !cur.json) return { ok: false, msg: 'No se pudo leer la lista en GitHub (' + cur.code + ')' };
     var remota = JSON.parse(Utilities.newBlob(Utilities.base64Decode(String(cur.json.content).replace(/\s/g, ''))).getDataAsString('UTF-8'));
     if (String(remota.version) !== String(p.base)) return { ok: false, conflicto: true, msg: 'La lista cambió mientras editabas' };
@@ -164,7 +167,7 @@ function apiPrivTutGuardar_(p) {
       var im = JSON.parse(String(p.img));
       var iid = String(im.id || '').replace(/[^A-Za-z0-9_-]/g, '');
       if (iid && im.base64) {
-        var ruta = 'priv/img/' + iid + 'v.jpg';
+        var ruta = CUAL + '/img/' + iid + 'v.jpg';
         var ya = tutGh_('GET', ruta);
         var cpo = { message: 'Imagen del Short ' + iid + ' (desde PRIV · ' + quien + ')', content: String(im.base64) };
         if (ya.code === 200 && ya.json && ya.json.sha) cpo.sha = ya.json.sha;
@@ -174,8 +177,8 @@ function apiPrivTutGuardar_(p) {
     }
 
     var texto = JSON.stringify(lista, null, 1);
-    var r = tutGh_('PUT', TUT_RUTA, {
-      message: 'Tutoriales v' + lista.version + ' (desde PRIV · ' + quien + ')',
+    var r = tutGh_('PUT', RUTA, {
+      message: (CUAL === 'lideres' ? 'Tutoriales zona de líderes v' : 'Tutoriales v') + lista.version + ' (desde PRIV · ' + quien + ')',
       content: Utilities.base64Encode(texto, Utilities.Charset.UTF_8),
       sha: cur.json.sha
     });
