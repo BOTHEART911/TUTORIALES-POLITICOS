@@ -1,0 +1,58 @@
+{
+ "id": "T06",
+ "titulo": "Referidos, mensajes y bitácoras",
+ "sub": "El trabajo diario con cada líder",
+ "num": 6,
+ "siguiente": "Agenda y eventos",
+ "escenas": [
+  {
+   "id": "s1",
+   "zoom": 1.25,
+   "voz": "Desde la ficha del líder, toca Referidos para ver a todas las personas que ha traído. Búscalas por nombre, barrio o puesto, y filtra por intención de voto con las pastillas. Desde cada referido también puedes escribirle por WhatsApp con un toque."
+  },
+  {
+   "id": "s2",
+   "zoom": 1.3,
+   "voz": "Para pasar varios referidos a otro líder, toca Seleccionar, marca las personas, toca Asignar seleccionados, elige el líder y confirma. La app muestra el líder actual y el nuevo antes de guardar, y cada persona queda asignada al líder que elegiste, sin recargar."
+  },
+  {
+   "id": "s3",
+   "zoom": 1.3,
+   "voz": "Con los tres puntos de la tarjeta abres los mensajes listos para el líder: el código de bienvenida, la felicitación por la tarea y el recordatorio de la meta. Ábrelos en WhatsApp o envíalos por el bot."
+  },
+  {
+   "id": "s4",
+   "zoom": 1.3,
+   "voz": "En Ahijados y delegación ves los líderes que este líder trajo. Si enciendes el interruptor, el padrino podrá trabajar el grupo de ese ahijado desde su app. El ahijado no pierde nada: el padrino no puede ceder sus referidos ni cambiarle la contraseña, y todo lo que haga queda a su nombre."
+  },
+  {
+   "id": "s5",
+   "zoom": 1.3,
+   "voz": "La ficha también muestra el trabajo del líder mes a mes: cada barra es el porcentaje trabajado y la última va en vivo. Toca un mes para ver su detalle y su bitácora. Toca Agregar bitácora, escribe qué refiere y qué compromiso quedó, y toca Guardar. Queda con tu nombre, la fecha y la hora, y solo quien la escribió puede editarla."
+  },
+  {
+   "id": "s6",
+   "zoom": 1.3,
+   "voz": "Con el botón Bitácoras sacas un informe. Elige uno o varios meses, deja todos los líderes o busca los que necesites, y toca PDF o Excel: el informe trae cada bitácora con su fecha y su autor, agrupada por mes."
+  },
+  {
+   "id": "s7",
+   "zoom": 1.0,
+   "voz": "Así acompañas a cada líder con información clara y todo queda registrado."
+  }
+ ],
+ "mini": {
+  "texto": "Cada líder, al día",
+  "linea2": "Referidos, mensajes y bitácoras",
+  "escena_h": "s1",
+  "q_h": 0.45,
+  "recorte_h": [
+   0.0,
+   0.0,
+   0.6,
+   0.95
+  ],
+  "escena_v": "s5",
+  "q_v": 0.9
+ }
+}

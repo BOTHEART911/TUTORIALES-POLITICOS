@@ -132,7 +132,7 @@
    "orden": 6,
    "tema": "Líderes",
    "titulo": "Referidos, mensajes y bitácoras",
-   "descripcion": "Referidos, mensajes por WhatsApp o bot, ahijados y bitácoras.",
+   "descripcion": "Referidos del líder, pasarlos a otro líder, mensajes listos por WhatsApp o bot, ahijados y delegación, bitácora mensual e informe.",
    "rutas": [
     "lideres"
    ],
@@ -144,8 +144,8 @@
    ],
    "youtube": "",
    "short": "",
-   "shortImg": "",
-   "duracion": "",
+   "shortImg": "priv/img/P06v.jpg",
+   "duracion": "1:58",
    "activo": false
   },
   {

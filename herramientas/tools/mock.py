@@ -208,7 +208,40 @@ def responder(accion, params, cuerpo):
     if accion == 'priv.iaAnalizar':
         return {'ok': True, 'modelo': 'Análisis', 'generado': 'hace un momento', 'texto': IA_TEXTO.get(p.get('vista'), IA_TEXTO['bd'])}
     if accion == 'priv.lideres':
-        return {'ok': True, 'items': LIDERES_FULL, 'columnas': [], 'rv': {}, 'plantillas': None}
+        return {'ok': True, 'items': LIDERES_FULL, 'columnas': [], 'rv': {}, 'plantillas': PLANT_LID}
+    if accion == 'priv.liderReferidos':
+        cod = str(p.get('codigo')); its = []
+        for x in PERSONAS:
+            if x.get('referencia') == cod and x['estado'] == 'ACTIVO':
+                its.append({'documento': x['documento'], 'nombre': x['nombre'], 'contacto': x.get('telefono', ''), 'residencia': x['residencia'], 'municipio': x['municipio'], 'puesto': x['puestoCrudo'], 'mesa': x['mesa'], 'intencion': x['intencion'], 'foto': ''})
+        return {'ok': True, 'items': its, 'columnas': [], 'rv': {}}
+    if accion == 'priv.personaReasignarLote':
+        for d in p.get('documentos', []):
+            c = _fila(d)
+            if c: c['referencia'] = str(p.get('referencia'))
+        return {'ok': True, 'n': len(p.get('documentos', []))}
+    if accion == 'priv.liderAhijados':
+        cod = str(p.get('codigo')); pad = next(x for x in LIDERES_FULL if x['codigo'] == cod)
+        aj = [{'codigo': x['codigo'], 'nombre': x['nombre'], 'referidos': x['referidos'], 'pct': x['pctTrabajo'], 'delegado': x['codigo'] in DELEG} for x in LIDERES_FULL if x['padrino'] == pad['nombre']]
+        return {'ok': True, 'padrino': {'codigo': cod, 'nombre': pad['nombre']}, 'ahijados': aj, 'columna': True}
+    if accion == 'priv.liderDelegar':
+        (DELEG.add if p.get('on') else DELEG.discard)(str(p.get('ahijado'))); return {'ok': True}
+    if accion == 'priv.liderAccion':
+        return {'ok': True, 'msg': 'Enviado por el bot'}
+    if accion == 'priv.liderMeses':
+        cod = str(p.get('codigo')); l = next(x for x in LIDERES_FULL if x['codigo'] == cod); r0 = l['referidos']
+        meses = [{'mes': '2026-%02d' % m, 'ref': round(r0 * f), 'trab': round(r0 * f * t), 'pct': round(t * 100), 'noFid': round(r0 * f * (1 - t))} for m, f, t in ((7, .4, .3), (8, .55, .42), (9, .7, .5), (10, .85, .61))]
+        return {'ok': True, 'codigo': cod, 'meses': meses, 'bitacoras': BITS.get(cod, [])}
+    if accion == 'priv.liderBitacoraGuardar':
+        it = {'id': 'B%03d' % (len(BITS.get(str(p.get('codigo')), [])) + 50), 'mes': p.get('mes'), 'fecha': dt.datetime.now().strftime('%Y-%m-%d %H:%M'), 'autor': 'Laura Gómez Ruiz', 'refiere': p.get('refiere', ''), 'compromiso': p.get('compromiso', ''), 'texto': p.get('texto', ''), 'propia': True}
+        BITS.setdefault(str(p.get('codigo')), []).insert(0, it); return {'ok': True, 'item': it}
+    if accion == 'priv.liderBitacoraInforme':
+        cols = ['codigo', 'mes', 'fecha', 'autor', 'refiere', 'compromiso', 'nota', 'editado']; filas = []
+        for cod, its in BITS.items():
+            for b in its: filas.append([cod, b['mes'], b['fecha'], b['autor'], b['refiere'], b['compromiso'], '', ''])
+        ms = sorted(set(f[1] for f in filas), reverse=True)
+        meses = [{'mes': m, 'n': sum(1 for f in filas if f[1] == m), 'lideres': len(set(f[0] for f in filas if f[1] == m)), 'cods': sorted(set(f[0] for f in filas if f[1] == m))} for m in ms]
+        return {'ok': True, 'meses': meses, 'lideres': {l['codigo']: l['nombre'] for l in LIDERES_FULL}, 'completo': True, 'cols': cols, 'filas': filas}
     if accion == 'priv.liderNuevoMeta':
         return {'ok': True, 'lideres': [{'codigo': l['codigo'], 'nombre': l['nombre']} for l in LIDERES_FULL], 'sugerido': str(len(LIDERES_FULL) + 1)}
     if accion == 'priv.liderBuscarDoc':
@@ -307,3 +340,14 @@ def _traza(d):
     ]
     return {'ok': True, 'persona': persona, 'esLider': bool(c.get('esLider')), 'items': items, 'total': len(items),
             'resumen': {'servicios': 1, 'serviciosAtendidos': 1, 'compromisos': 1, 'compromisosCumplidos': 1, 'eventos': 1, 'formularios': 1}, 'rv': {}}
+
+
+PLANT_LID = {
+    'codigo': 'Hola [NOMBRE] 👋 Bienvenido(a) al equipo de Candidato Ejemplo. Tu número de líder es *[CODIGO]*. Entra a la app pública, zona de líderes, con tu documento y empieza a registrar a tus referidos.',
+    'tarea': '¡Gracias, [NOMBRE]! Ya vas con *[REFERIDOS] referidos*. Tu trabajo hace la diferencia. ¡Sigamos!',
+    'notarea': 'Hola [NOMBRE], te recordamos la meta de referidos de este mes. Hoy tienes [REFERIDOS]. ¿Te ayudamos a avanzar?'}
+DELEG = set()
+BITS = {'2': [
+    {'id': 'B001', 'mes': '2026-10', 'fecha': '2026-10-21 18:40', 'autor': 'Laura Gómez Ruiz', 'refiere': 'Reunión con 12 vecinos del barrio La Esperanza.', 'compromiso': 'Traer el listado de la junta antes del viernes.', 'texto': '', 'propia': True},
+    {'id': 'B002', 'mes': '2026-09', 'fecha': '2026-09-14 10:05', 'autor': 'Laura Gómez Ruiz', 'refiere': 'Visita casa a casa en la calle 8.', 'compromiso': 'Llamar a los 5 no contactados.', 'texto': '', 'propia': True}],
+    '1': [{'id': 'B003', 'mes': '2026-10', 'fecha': '2026-10-02 17:20', 'autor': 'Laura Gómez Ruiz', 'refiere': 'Encuentro con madres comunitarias.', 'compromiso': 'Agendar jornada de salud.', 'texto': '', 'propia': True}]}

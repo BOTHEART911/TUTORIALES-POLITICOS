@@ -1,0 +1,67 @@
+"""T06 · Referidos, mensajes y bitácoras — grabación (h | v)."""
+import sys, os
+sys.path.insert(0, os.path.dirname(__file__))
+from rec import Grab
+FMT = sys.argv[1]
+g = Grab(FMT, f'/home/claude/tut/rec/T06_{FMT}')
+g.entrar(ruta='#/lideres'); g.espera(1500)
+g.grabar()
+
+g.marca('s1')
+g.tap('.ld-card[data-cod="2"] .bd-btn[data-a="ver"]', despues=1500)
+g.tap('#v-refs', despues=2000)
+g.escribir('#rf-q', 'Prado', 150); g.espera(1300)
+g.page.fill('#rf-q', ''); g.page.dispatch_event('#rf-q', 'input'); g.espera(700)
+g.tap('#rf-ints button >> nth=1', despues=1400)
+g.tap('#rf-ints button >> nth=0', despues=900)
+
+g.marca('s2')
+g.tap('#rf-sel', despues=800)
+g.tap('#rf-grid .rf-card >> nth=0', despues=500)
+g.tap('#rf-grid .rf-card >> nth=1', despues=700)
+g.tap('#rf-asig', despues=1200)
+g.escribir('#reasg-lid', 'Paola', 150); g.espera(500)
+g.tap('#reasg-lid-list .combo-opt >> nth=0', despues=500)
+g.tap('#reasg-save', despues=2000)
+g.js("() => closeLayer()"); g.espera(600)
+
+g.marca('s3')
+g.tap('.ld-card[data-cod="3"] .bd-btn[data-a="acciones"]', despues=1500)
+g.mover('.ld-acc-block >> nth=1', 700); g.espera(1200)
+g.mover('.ld-acc-block >> nth=2', 700); g.espera(1000)
+g.tap('[data-wa="codigo"]', despues=300)
+g.ver_mensaje(3500)
+g.tap('[data-bot="tarea"]', despues=1800)
+g.js("() => closeLayer()"); g.espera(600)
+
+g.marca('s4')
+g.tap('.ld-card[data-cod="1"] .bd-btn[data-a="ver"]', despues=1500)
+g.tap('#ld-ahijados', despues=1800)
+g.mover('.ld-aj >> nth=0', 700); g.espera(900)
+g.tap('.ld-aj >> nth=0 >> .ld-aj-ck', despues=1200); g.pausa(1800)
+g.tap('#ld-aj-back', despues=1500)
+
+g.marca('s5')
+g.mover('#ld-graf-box', 700); g.espera(1200)
+g.tap('.ld-gb[data-mes="2026-10"]', despues=1500)
+g.mover('.ld-bit-list', 700); g.espera(1000)
+g.tap('.ld-bit-add', despues=600)
+g.escribir('.ld-bit-ref', 'Recorrido por el barrio Centro con 8 familias nuevas.', 35); g.espera(300)
+g.escribir('.ld-bit-comp', 'Enviar la lista de inscritos a la jornada de salud.', 35); g.espera(300)
+g.tap('.ld-bit-save', despues=1800)
+g.js("() => closeLayer()"); g.espera(600)
+
+g.marca('s6')
+g.page.evaluate('() => window.scrollTo({top: 0, behavior: "smooth"})'); g.espera(500)
+g.tap('#ld-bitinf', despues=1800)
+g.tap('#ldi-mall', despues=900)
+g.mover('#ldi-res', 600); g.espera(800)
+with g.page.expect_download() as dl:
+    g.tap('#ldi-pdf', despues=1200)
+g.ver_pdf(dl.value, ms=3500)
+g.js("() => closeLayer()"); g.espera(500)
+
+g.marca('s7')
+g.espera(2500)
+g.fin()
+print(open(f'/home/claude/tut/rec/T06_{FMT}/log.json').read())
