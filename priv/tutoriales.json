@@ -51,11 +51,11 @@
     "contacto",
     "puesto"
    ],
-   "youtube": "",
-   "short": "",
+   "youtube": "https://youtu.be/eLTFmz0YUwE",
+   "short": "https://youtube.com/shorts/oe1moy251oE",
    "shortImg": "priv/img/P02v.jpg",
    "duracion": "2:31",
-   "activo": false
+   "activo": true
   },
   {
    "id": "P03",
