@@ -1,0 +1,85 @@
+{
+ "id": "L01",
+ "titulo": "Mis referidos: tu grupo, al día",
+ "sub": "Mira, llama, marca y trabaja en equipo",
+ "num": 1,
+ "siguiente": "Trabaja sin señal",
+ "zona": "ZONA DE LÍDERES",
+ "barra": "Zona de líderes · app de la campaña",
+ "escenas": [
+  {
+   "id": "s1",
+   "zoom": 1.0,
+   "voz": "En Mis referidos está tu grupo. Pero recuerda: lo importante no es tener referidos, es estar en contacto con ellos. Veamos cómo lograrlo."
+  },
+  {
+   "id": "s2",
+   "zoom": 1.3,
+   "voz": "Arriba, Fidelización del mes te dice qué parte de tu grupo ya tiene la intención marcada. La franja muestra cuántos sumaste este mes frente al mes anterior, y con Ampliar ves la gráfica mes a mes."
+  },
+  {
+   "id": "s3",
+   "zoom": 1.3,
+   "voz": "Las pastillas filtran por municipio. La fila de actividad te muestra quiénes pidieron un servicio, tienen un compromiso, fueron a un evento o llenaron un formulario."
+  },
+  {
+   "id": "s4",
+   "zoom": 1.25,
+   "voz": "Toca la i de una persona para ver su historia: sus solicitudes, sus compromisos, los eventos y formularios. Así, cuando la llames, sabes de qué hablarle."
+  },
+  {
+   "id": "s5",
+   "zoom": 1.35,
+   "voz": "Toca el teléfono para llamarla. Después de hablar, toca Intención y marca lo que te dijo. La barra del mes sube al instante. Si te equivocas, toca otra vez la opción y se quita."
+  },
+  {
+   "id": "s6",
+   "zoom": 1.35,
+   "voz": "Cuando el candidato pida confirmar la asistencia a un evento, llama de nuevo y marca Asistencia: confirmada, no puede o fuera del municipio."
+  },
+  {
+   "id": "s7",
+   "zoom": 1.3,
+   "voz": "Hazlo un hábito: si tienes noventa y nueve referidos, con unas cuatro llamadas al día hablas con todos dentro del mes. Con el buscador encuentras a cualquiera en segundos."
+  },
+  {
+   "id": "s8",
+   "zoom": 1.35,
+   "voz": "Ceder es el botón del trabajo en equipo. Si un compañero conoce mejor a esa persona y la puede fidelizar mejor, cédesela: escribe su nombre, elígelo y confirma. Después no la recuperas desde la app."
+  },
+  {
+   "id": "s9",
+   "zoom": 1.4,
+   "voz": "Para sumar a alguien, toca Nuevo referido y verifica su documento. Si ya es de otro líder, la app te dice de quién: llámalo y acuerden quién la fideliza mejor. Si eres tú, que te la ceda."
+  },
+  {
+   "id": "s10",
+   "zoom": 1.4,
+   "voz": "Si no está registrada, completa su nombre, su WhatsApp y su barrio, confirma, y queda de una vez en tu grupo."
+  },
+  {
+   "id": "s11",
+   "zoom": 1.3,
+   "voz": "Si aparece el aviso de documentos por validar, toca Validar ahora. Revisa con la persona que su cédula esté bien escrita: confirma que está correcta, o corrígela."
+  },
+  {
+   "id": "s12",
+   "zoom": 1.0,
+   "voz": "Llama, marca y trabaja en equipo: así tu grupo se mantiene cerca. En el siguiente tutorial: trabaja sin señal."
+  }
+ ],
+ "mini": {
+  "texto": "No basta con tenerlos",
+  "linea2": "Mis referidos, al día",
+  "escena_h": "s5",
+  "q_h": 0.97,
+  "recorte_h": [
+   0.0,
+   0.0,
+   1.0,
+   1.0
+  ],
+  "escena_v": "s5",
+  "q_v": 0.97
+ }
+}

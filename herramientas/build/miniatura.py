@@ -59,7 +59,7 @@ card = tarjeta(f, 26).rotate(-4, resample=Image.BICUBIC, expand=True)
 sombra(im, card, W - card.width - 30, (H - card.height) // 2 + 10)
 d = ImageDraw.Draw(im)
 y = 70
-y = pastilla(d, 64, y, f"TUTORIAL {G['num']} · PANEL PRIVADO", INTER('Bold', 24), fondo_='#0063D8') + 30
+y = pastilla(d, 64, y, f"TUTORIAL {G['num']} · {G.get('zona', 'PANEL PRIVADO')}", INTER('Bold', 24), fondo_='#0063D8') + 30
 tam = 96
 while True:
     tf = SORA(800, tam); ls = lineas(d, M['texto'], tf, 600)
@@ -77,8 +77,8 @@ im.convert('RGB').save(f'{OUT}/{ID}_miniatura_16x9.jpg', quality=92)
 W, H = 1080, 1920
 im = fondo(W, H).convert('RGBA'); d = ImageDraw.Draw(im)
 y = 130
-fp = INTER('Bold', 34); tw = fp.getlength(f"TUTORIAL {G['num']} · PANEL PRIVADO") + 44
-pastilla(d, int((W - tw) / 2), y, f"TUTORIAL {G['num']} · PANEL PRIVADO", fp, fondo_='#0063D8'); y += 120
+fp = INTER('Bold', 34); tw = fp.getlength(f"TUTORIAL {G['num']} · {G.get('zona', 'PANEL PRIVADO')}") + 44
+pastilla(d, int((W - tw) / 2), y, f"TUTORIAL {G['num']} · {G.get('zona', 'PANEL PRIVADO')}", fp, fondo_='#0063D8'); y += 120
 tam = 124
 while True:
     tf = SORA(800, tam); ls = lineas(d, M['texto'], tf, W - 110)

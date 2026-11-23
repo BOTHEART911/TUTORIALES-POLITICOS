@@ -90,7 +90,7 @@ def chrome():
         d.rounded_rectangle(VENT, RAD, fill='#E9EEF5')
         for i, c in enumerate(['#FF5F57', '#FEBC2E', '#28C840']): d.ellipse([VX + 18 + i * 22, VY - BAR + 14, VX + 30 + i * 22, VY - BAR + 26], fill=c)
         d.rounded_rectangle([VX + 110, VY - BAR + 8, VX + 660, VY - BAR + 32], 12, fill='#FFFFFF')
-        d.text((VX + 128, VY - BAR + 20), 'Panel privado · app de la campaña', font=INTER('Medium', 15), fill='#4B5B72', anchor='lm')
+        d.text((VX + 128, VY - BAR + 20), G.get('barra', 'Panel privado · app de la campaña'), font=INTER('Medium', 15), fill='#4B5B72', anchor='lm')
         et = f"Tutorial {G['num']} · {G['titulo']}"
         d.text((VX + VW - 18, VY - BAR + 20), et, font=INTER('SemiBold', 16), fill='#0A2540', anchor='rm')
         hueco = [VX, VY, VX + VW, VY + VH]; rr = 0
@@ -115,7 +115,7 @@ def tarjeta(tipo):
         ic = Image.open(f'{T}/assets/icono_tut.png').resize((int(170 * s),) * 2, Image.LANCZOS)
         y0 = H // 2 - int(230 * s)
         im.alpha_composite(ic, (cx - ic.width // 2, y0)); y = y0 + ic.height + int(46 * s)
-        d.text((cx, y), f"PANEL PRIVADO · TUTORIAL {G['num']}", font=INTER('Bold', int(30 * s)), fill='#7FB2FF', anchor='mm'); y += int(78 * s)
+        d.text((cx, y), f"{G.get('zona', 'PANEL PRIVADO')} · TUTORIAL {G['num']}", font=INTER('Bold', int(30 * s)), fill='#7FB2FF', anchor='mm'); y += int(78 * s)
         tf = SORA(800, int(92 * s) if FMT == 'h' else 96)
         for ln in partir(G['titulo'], tf, W - 160): d.text((cx, y), ln, font=tf, fill='#FFFFFF', anchor='mm'); y += int(104 * s)
         d.text((cx, y + 4), G['sub'], font=INTER('Medium', int(38 * s)), fill='#C9D6E8', anchor='mm')

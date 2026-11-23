@@ -8,3 +8,8 @@ Copiar a `/home/claude/tut` (tools/, build/, assets/) y además:
 
 Orden por tutorial N: `python3 tools/vNN.py h` y `v` → `python3 tools/voz.py tools/gNN.json` → `python3 build/tut.py tools/gNN.json h|v` → `python3 build/miniatura.py tools/gNN.json`.
 Salida en `out/TNN/`.
+
+## Zona de líderes (PERDOMO / RONALD-SUAREZ)
+- Clonar la app pública en `/home/claude/jhonny-perdomo` (o `PRIV_REPO`). `tools/lz.py` pone `MOCK=mock_lz` (líder ficticia Laura Gómez, N° 12, 99 referidos de ejemplo) y entra a la zona fuera de cámara.
+- Orden por tutorial LNN: `python3 tools/vLNN.py h` y `v` → `python3 tools/voz.py tools/gLNN.json` → `python3 build/tut.py tools/gLNN.json h|v` → `python3 build/miniatura.py tools/gLNN.json`. `tools/hoja_marcas.py rec/LNN_h /tmp/hoja.jpg` arma una hoja con dos fotogramas por escena para revisar.
+- En los guiones `zona` y `barra` cambian los rótulos («ZONA DE LÍDERES» en lugar de «PANEL PRIVADO»).

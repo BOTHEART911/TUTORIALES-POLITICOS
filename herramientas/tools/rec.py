@@ -6,7 +6,8 @@ Acciones con cursor visible: g.tap(sel), g.escribir(sel, txt), g.espera(ms)
 """
 import json, os, re, sys, time, threading, base64, functools, http.server, socketserver, urllib.parse
 sys.path.insert(0, os.path.dirname(__file__))
-import mock
+import importlib
+mock = importlib.import_module(os.environ.get('MOCK', 'mock'))
 from playwright.sync_api import sync_playwright
 
 REPO = os.environ.get('PRIV_REPO', '/home/claude/jhonny-priv')
@@ -124,6 +125,8 @@ class Grab:
                 return route.fulfill(status=200, content_type='text/css', body=FONT_CSS)
             if pu.path.startswith('/__assets/'):
                 return route.fulfill(path=TUT + '/assets/' + os.path.basename(pu.path))
+            if 'github.io' in pu.netloc and pu.path.lower().endswith(('.png', '.jpg', '.webp')):
+                return route.fulfill(path=TUT + '/assets/user.png')
             if pu.netloc.startswith('127.0.0.1'):
                 if pu.path.endswith('/js/marca.js'):
                     return route.fulfill(status=200, content_type='application/javascript', body=_marca_js())
