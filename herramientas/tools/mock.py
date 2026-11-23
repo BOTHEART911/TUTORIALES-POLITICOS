@@ -11,7 +11,7 @@ FALTAN = []
 
 MARCA = {
     'candidato': 'Candidato Ejemplo', 'pnCandidato': 'Candidato', 'municipio': 'Villa Ejemplo',
-    'departamento': 'Tu departamento', 'lugar': 'Villa Ejemplo', 'lema': 'Tu campaña',
+    'departamento': 'Departamento Ejemplo', 'lugar': 'Villa Ejemplo', 'lema': 'Tu campaña',
     'equipo': 'Equipo de ejemplo', 'color': '#0063D8', 'color700': '#004FAD',
     'icono': '/__assets/logo.png', 'banner': '/__assets/logo.png', 'imgBase': '/__assets/',
 }
@@ -42,6 +42,7 @@ def _personas(n=64):
     for i in range(n):
         nom = f"{random.choice(NOMBRES)} {random.choice(APELL)} {random.choice(APELL)}"
         mun = 'Villa Ejemplo' if i % 7 else random.choice(['Otro municipio', 'POR CONFIRMAR'])
+        if i % 9 == 4: mun = 'SIN CONSULTAR'
         reg = HOY - dt.timedelta(days=random.randint(3, 200))
         p = {
             'documento': str(1000000100 + i * 37), 'nombre': nom, 'residencia': random.choice(BARRIOS),
@@ -49,7 +50,7 @@ def _personas(n=64):
             'fechaRegistro': _fecha(reg), 'fechaActualizacion': _fecha(reg + dt.timedelta(days=random.randint(0, 3))) if i % 3 == 0 else '',
             'esLider': i % 11 == 0, 'foto': '', 'puestoCrudo': random.choice(PUESTOS) if mun == 'Villa Ejemplo' else '',
             'mesa': str(random.randint(1, 18)) if mun == 'Villa Ejemplo' else '', 'motivo': 'NO APARECE EN EL CENSO' if mun == 'POR CONFIRMAR' else '',
-            'telefono': '300' + str(5550000 + i),
+            'telefono': '300' + str(5550000 + i), 'referencia': str(1 + i % 6) if i % 5 else '',
         }
         out.append(p)
     out.sort(key=lambda x: x['nombre'])
@@ -57,7 +58,9 @@ def _personas(n=64):
 
 
 PERSONAS = _personas()
-LIDERES = [p for p in PERSONAS if p['esLider']]
+LIDERES = [{'codigo': str(k + 1), 'nombre': n} for k, n in enumerate(['Ana Rojas Peña', 'Jorge Castro León', 'Paola Vargas Cruz', 'Felipe Ortiz Ríos', 'Camila Peña Torres', 'Rosa León Duarte'])]
+EXISTE = {'1000000951': 'Jorge Peña Herrera'}
+for x in PERSONAS: EXISTE[x['documento']] = x['nombre']
 
 
 def _agenda():
@@ -101,8 +104,25 @@ def responder(accion, params, cuerpo):
         FOTO['v'] = '/__assets/foto_laura.png'
         return {'ok': True, 'foto': FOTO['v']}
     if accion == 'priv.baseDatos':
-        return {'ok': True, 'items': PERSONAS, 'lideres': [{'documento': l['documento'], 'nombre': l['nombre']} for l in LIDERES],
-                'columnas': [], 'dash': {'puestos': PUESTOS, 'puestoOtro': 'OTRO MUNICIPIO'}, 'rv': {}, 'registraduriaUrl': ''}
+        return {'ok': True, 'items': PERSONAS, 'lideres': LIDERES,
+                'columnas': [], 'dash': {'puestos': PUESTOS, 'puestoOtro': 'OTRO MUNICIPIO'}, 'rv': {}, 'registraduriaUrl': 'https://consultacenso.registraduria.gov.co/'}
+    if accion == 'pub.residencias':
+        return BARRIOS
+    if accion == 'priv.validarDoc':
+        d = str(p.get('documento', ''))
+        return {'ok': True, 'existe': d in EXISTE, 'nombre': EXISTE.get(d, '')}
+    if accion == 'priv.personaAgregar':
+        c = {'documento': str(p.get('documento')), 'nombre': str(p.get('nombre', '')).upper() if False else p.get('nombre', ''), 'residencia': p.get('residencia', ''),
+             'municipio': 'SIN CONSULTAR', 'intencion': '', 'estado': 'ACTIVO', 'fechaRegistro': _fecha(dt.date.today()), 'fechaActualizacion': '',
+             'esLider': False, 'foto': '', 'puestoCrudo': '', 'mesa': '', 'motivo': '', 'referencia': p.get('referencia', ''), 'telefono': p.get('contacto', '')}
+        PERSONAS.append(c); EXISTE[c['documento']] = c['nombre']
+        return {'ok': True, 'card': c}
+    if accion == 'priv.puestoGuardar':
+        c = next((x for x in PERSONAS if x['documento'] == str(p.get('documento'))), None)
+        if c:
+            mun = str(p.get('municipio', '')).strip()
+            c.update({'municipio': 'Villa Ejemplo' if mun.upper() == 'VILLA EJEMPLO' else mun.title(), 'puestoCrudo': p.get('puesto', ''), 'mesa': p.get('mesa', ''), 'fechaActualizacion': _fecha(dt.date.today())})
+        return {'ok': True, 'card': c}
     if accion == 'priv.agenda':
         return {'ok': True, 'items': AGENDA, 'estricta': False, 'esDev': False}
     if accion == 'priv.agendaMeta':

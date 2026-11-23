@@ -1,0 +1,91 @@
+"""T02 · Busca y agrega — grabación (h | v)."""
+import sys, os
+sys.path.insert(0, os.path.dirname(__file__))
+from rec import Grab
+FMT = sys.argv[1]; V = FMT == 'v'
+g = Grab(FMT, f'/home/claude/tut/rec/T02_{FMT}')
+NUEVO = '1000004321'
+g.entrar(ruta='#/bd'); g.espera(1500)
+g.grabar()
+
+g.marca('s1')
+g.espera(800); g.mover('#bd-body .bd-card .bd-nombre', 900); g.espera(900)
+g.mover('#bd-body .bd-card .bd-doc', 600); g.espera(700)
+g.mover('#bd-body .bd-card .bd-meta', 700); g.espera(1500)
+
+g.marca('s2')
+g.escribir('#bd-q', 'Rojas', 140); g.espera(1800)
+g.page.fill('#bd-q', ''); g.page.dispatch_event('#bd-q', 'input'); g.espera(300)
+g.escribir('#bd-q', 'El Prado', 110); g.espera(1800)
+g.page.fill('#bd-q', ''); g.page.dispatch_event('#bd-q', 'input'); g.espera(900)
+
+g.marca('s3')
+g.tap('#bd-chips .bd-chip[data-f="Villa Ejemplo"]', despues=1300)
+g.tap('#bd-chips-int .bd-chip-int[data-int=""]', despues=1600)
+g.mover('#bd-count', 600); g.espera(1200)
+g.tap('#bd-chips-int .bd-chip-int[data-int=""]', despues=500)
+g.tap('#bd-chips .bd-chip[data-f="Todos"]', despues=900)
+
+g.marca('s4')
+g.escribir('#bd-lid', 'Ana', 160); g.espera(900)
+g.tap('#bd-lid-list .combo-opt >> nth=0', despues=1800)
+g.mover('#bd-count', 600); g.espera(900)
+g.page.fill('#bd-lid', 'Todos los líderes'); g.page.dispatch_event('#bd-lid', 'input'); g.espera(300)
+g.js("() => { const l = document.getElementById('bd-lid-list'); if (l) l.hidden = true; }"); g.espera(800)
+
+g.marca('s5')
+g.tap('#bdt-open', despues=2600)
+g.tap('.bdt-head [data-close]', despues=900)
+
+g.marca('s6')
+g.tap('#bd-add', despues=900)
+g.escribir('#a-doc', '1000000951', 90); g.espera(300)
+g.tap('#a-buscar', despues=1700)
+g.page.fill('#a-doc', ''); g.espera(200)
+g.escribir('#a-doc', NUEVO, 90); g.espera(300)
+g.tap('#a-buscar', despues=1600)
+
+g.marca('s7')
+g.escribir('#a-nombre', 'Martha Lucía Pardo Ruiz', 55); g.espera(300)
+g.escribir('#a-contacto', '3005550199', 60); g.espera(300)
+g.escribir('#a-resi', 'Pra', 160); g.espera(600)
+g.tap('#a-resi-list .combo-opt[data-v="El Prado"]', despues=500)
+g.escribir('#a-ref', '3', 120); g.espera(400)
+g.tap('#a-save', despues=2200)
+g.mover(f'.bd-card[data-doc="{NUEVO}"] .bd-nombre', 700); g.espera(900)
+
+g.marca('s8')
+g.tap(f'.bd-card[data-doc="{NUEVO}"] .bd-btn[data-a="consultar"]', despues=1000)
+g.tap('#cons-copy', despues=900)
+g.mover('#cons-open', 700); g.espera(300)
+g.page.evaluate("([x,y]) => window.__curTap(x,y)", [g.page.evaluate("window.__CURP")[0], g.page.evaluate("window.__CURP")[1]]); g.espera(300)
+
+g.marca('s9')
+g.js(open('/home/claude/tut/tools/registraduria.js').read() and "(d) => {" + open('/home/claude/tut/tools/registraduria.js').read() + "; regiAbrir(d); }", NUEVO); g.espera(1500)
+g.tap('#__regi-doc', despues=400); g.js("() => regiPegar()"); g.espera(900)
+g.tap('#__regi-btn', despues=600); g.js("(f) => regiConsultar(f)", [NUEVO, 'DEPARTAMENTO EJEMPLO', 'VILLA EJEMPLO', 'ESCUELA EL PRADO', 'CALLE 8 # 4-20', '7']); g.espera(1500)
+g.mover('#__regi-fila td >> nth=0', 600, dx=0.1); g.espera(200)
+g.mover('#__regi-fila td >> nth=5', 900, dx=0.9); g.js("() => regiSeleccionar()"); g.espera(1500)
+g.js("() => regiCerrar()"); g.espera(700)
+
+g.marca('s10')
+g.tap('#cons-paste', despues=200)
+g.page.fill('#cons-paste', '\t'.join([NUEVO, 'DEPARTAMENTO EJEMPLO', 'VILLA EJEMPLO', 'ESCUELA EL PRADO', 'CALLE 8 # 4-20', '7'])); g.espera(1000)
+g.tap('#cons-read', despues=1400)
+g.mover('#cn-pue', 600); g.espera(500); g.mover('#cn-mesa', 600); g.espera(500)
+g.tap('#cn-save', despues=2000)
+g.mover(f'.bd-card[data-doc="{NUEVO}"] .bd-mun', 700); g.espera(1000)
+
+g.marca('s11')
+g.tap('#bd-chips .bd-chip[data-f="Sin consultar"]', despues=1200)
+g.tap('#bd-body .bd-card .bd-btn[data-a="consultar"]', despues=1100)
+g.tap('#cons-marks .cons-mark[data-m="A LA ESPERA"]', despues=1100)
+g.tap('#cons-marks .cons-mark[data-m="POR CONFIRMAR"]', despues=1100)
+g.mover('#cons-motivo .cons-mot >> nth=0', 700); g.espera(1500)
+g.js("() => closeLayer()"); g.espera(600)
+g.tap('#bd-chips .bd-chip[data-f="Todos"]', despues=900)
+
+g.marca('s12')
+g.espera(2500)
+g.fin()
+print(open(f'/home/claude/tut/rec/T02_{FMT}/log.json').read())

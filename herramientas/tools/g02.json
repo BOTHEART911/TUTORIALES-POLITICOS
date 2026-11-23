@@ -1,0 +1,83 @@
+{
+ "id": "T02",
+ "titulo": "Busca y agrega",
+ "sub": "Base de datos: buscar, filtrar y agregar contactos",
+ "num": 2,
+ "siguiente": "Ficha, por confirmar y validación",
+ "escenas": [
+  {
+   "id": "s1",
+   "zoom": 1.0,
+   "voz": "En Base de datos está toda la gente que la campaña ha registrado. Cada tarjeta es una persona: su nombre, documento, barrio e intención de voto."
+  },
+  {
+   "id": "s2",
+   "zoom": 1.3,
+   "voz": "Para encontrar a alguien, escribe en el buscador un nombre, un documento o un barrio. La lista se filtra al instante."
+  },
+  {
+   "id": "s3",
+   "zoom": 1.3,
+   "voz": "Las pastillas filtran por dónde vota y por intención de voto. El número de cada pastilla te dice cuántas personas hay, antes de tocarla."
+  },
+  {
+   "id": "s4",
+   "zoom": 1.3,
+   "voz": "Para ver solo los referidos de un líder, búscalo aquí por su nombre o su número y elígelo. El contador te dice cuántas personas trajo. Para volver a ver a todos, escoge Todos los líderes."
+  },
+  {
+   "id": "s5",
+   "zoom": 1.2,
+   "voz": "La franja de crecimiento muestra cuántos registros entran cada mes. Tócala para ampliarla y comparar."
+  },
+  {
+   "id": "s6",
+   "zoom": 1.45,
+   "voz": "Para agregar a alguien, toca Agregar. Primero va el documento: la app revisa que no esté repetido. En este ejemplo, el primer documento ya existe y la app no deja duplicarlo. Probamos con otro y queda disponible."
+  },
+  {
+   "id": "s7",
+   "zoom": 1.45,
+   "voz": "Ahora completa el nombre completo y el WhatsApp. La residencia se busca escribiendo las primeras letras. Si lo trajo un líder, escribe su número. Toca Guardar y crear tarjeta: la persona aparece de primera en la lista."
+  },
+  {
+   "id": "s8",
+   "zoom": 1.4,
+   "voz": "Ahora consulta dónde vota. Toca la lupa, copia el documento con el botón Copiar y toca Abrir Registraduría."
+  },
+  {
+   "id": "s9",
+   "zoom": 1.12,
+   "voz": "En la página de la Registraduría, pega el documento en Número de identificación, deja Lugar de votación actual y toca Consultar. Luego selecciona la fila del resultado y cópiala."
+  },
+  {
+   "id": "s10",
+   "zoom": 1.4,
+   "voz": "Vuelve al panel, pega la fila en el recuadro y toca Leer datos. La app llena sola el departamento, el municipio, el puesto, la dirección y la mesa; si algo no cuadra, lo corriges a mano. Toca Guardar puesto: la tarjeta queda en verde."
+  },
+  {
+   "id": "s11",
+   "zoom": 1.4,
+   "voz": "Si la persona aún no aparece en el censo, márcala A la espera. Si dudas del documento, márcala Por confirmar y elige el motivo, que es obligatorio. Su líder lo verá y lo revisará."
+  },
+  {
+   "id": "s12",
+   "zoom": 1.0,
+   "voz": "Así tu base de datos crece ordenada, sin repetidos y con el puesto de votación de cada persona."
+  }
+ ],
+ "mini": {
+  "texto": "Encuentra a cualquiera",
+  "linea2": "Buscar, filtrar y agregar",
+  "escena_h": "s3",
+  "q_h": 0.9,
+  "recorte_h": [
+   0.0,
+   0.05,
+   0.62,
+   0.95
+  ],
+  "escena_v": "s3",
+  "q_v": 0.9
+ }
+}

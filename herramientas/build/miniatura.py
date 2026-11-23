@@ -54,16 +54,20 @@ W, H = 1280, 720
 im = fondo(W, H).convert('RGBA'); d = ImageDraw.Draw(im)
 f = frame('h', M['escena_h'], M['q_h']); r = M.get('recorte_h', [0, 0, 1, 1])
 f = f.crop((int(r[0] * f.width), int(r[1] * f.height), int(r[2] * f.width), int(r[3] * f.height)))
-ch = 560; f = f.resize((int(f.width * ch / f.height), ch), Image.LANCZOS)
-if f.width > 600: f = f.crop(((f.width - 600) // 2, 0, (f.width - 600) // 2 + 600, ch))
+ch = 540; f = f.resize((int(f.width * ch / f.height), ch), Image.LANCZOS)
+if f.width > 520: f = f.crop((0, 0, 520, ch))
 card = tarjeta(f, 26).rotate(-4, resample=Image.BICUBIC, expand=True)
 sombra(im, card, W - card.width - 30, (H - card.height) // 2 + 10)
 d = ImageDraw.Draw(im)
 y = 70
 y = pastilla(d, 64, y, f"TUTORIAL {G['num']} · PANEL PRIVADO", INTER('Bold', 24), fondo_='#0063D8') + 30
-tf = SORA(800, 96)
-for ln in lineas(d, M['texto'], tf, 620):
-    d.text((60, y), ln, font=tf, fill='#FFFFFF'); y += 108
+tam = 96
+while True:
+    tf = SORA(800, tam); ls = lineas(d, M['texto'], tf, 600)
+    if (len(ls) <= 2 and max(tf.getlength(l) for l in ls) <= 600) or tam <= 60: break
+    tam -= 4
+for ln in ls:
+    d.text((60, y), ln, font=tf, fill='#FFFFFF'); y += int(tam * 1.13)
 y += 10
 d.text((64, y), M['linea2'], font=INTER('SemiBold', 38), fill='#FDBA74')
 ic = Image.open(f'{T}/assets/icono_tut.png').resize((64, 64), Image.LANCZOS); im.alpha_composite(ic, (64, H - 64 - 48))
@@ -73,19 +77,23 @@ im.convert('RGB').save(f'{OUT}/{ID}_miniatura_16x9.jpg', quality=92)
 # ---------- vertical 1080x1920 ----------
 W, H = 1080, 1920
 im = fondo(W, H).convert('RGBA'); d = ImageDraw.Draw(im)
-f = frame('v', M['escena_v'], M['q_v']); f = f.resize((760, int(f.height * 760 / f.width)), Image.LANCZOS)
-f = f.crop((0, 0, 760, min(f.height, 1330)))
-bez = Image.new('RGBA', (f.width + 28, f.height + 28), (17, 24, 39, 255)); bez = tarjeta(bez, 70)
-bez.alpha_composite(tarjeta(f, 56), (14, 14))
-bez = bez.rotate(-3, resample=Image.BICUBIC, expand=True)
-sombra(im, bez, (W - bez.width) // 2 + 30, H - bez.height - 70)
-d = ImageDraw.Draw(im)
 y = 130
 fp = INTER('Bold', 34); tw = fp.getlength(f"TUTORIAL {G['num']} · PANEL PRIVADO") + 44
 pastilla(d, int((W - tw) / 2), y, f"TUTORIAL {G['num']} · PANEL PRIVADO", fp, fondo_='#0063D8'); y += 120
-tf = SORA(800, 124)
-for ln in lineas(d, M['texto'], tf, W - 120):
-    d.text((W // 2, y), ln, font=tf, fill='#FFFFFF', anchor='mt'); y += 138
-d.text((W // 2, y + 20), M['linea2'], font=INTER('SemiBold', 50), fill='#FDBA74', anchor='mt')
+tam = 124
+while True:
+    tf = SORA(800, tam); ls = lineas(d, M['texto'], tf, W - 110)
+    if len(ls) <= 2 or tam <= 80: break
+    tam -= 6
+for ln in ls:
+    d.text((W // 2, y), ln, font=tf, fill='#FFFFFF', anchor='mt'); y += int(tam * 1.12)
+d.text((W // 2, y + 16), M['linea2'], font=INTER('SemiBold', 50), fill='#FDBA74', anchor='mt'); y += 110
+f = frame('v', M['escena_v'], M['q_v']); f = f.resize((760, int(f.height * 760 / f.width)), Image.LANCZOS)
+alto = H - y - 40
+f = f.crop((0, 0, 760, min(f.height, alto - 40)))
+bez = Image.new('RGBA', (f.width + 28, f.height + 28), (17, 24, 39, 255)); bez = tarjeta(bez, 70)
+bez.alpha_composite(tarjeta(f, 56), (14, 14))
+bez = bez.rotate(-3, resample=Image.BICUBIC, expand=True)
+sombra(im, bez, (W - bez.width) // 2 + 20, y)
 im.convert('RGB').save(f'{OUT}/{ID}_miniatura_9x16.jpg', quality=92)
 print('ok')

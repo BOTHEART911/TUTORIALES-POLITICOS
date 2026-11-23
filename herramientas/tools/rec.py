@@ -73,7 +73,7 @@ def _servidor():
 def _marca_js():
     s = open(REPO + '/js/marca.js', encoding='utf-8').read()
     rep = {'CANDIDATO': 'Candidato Ejemplo', 'PN_CANDIDATO': 'Candidato', 'MUNICIPIO': 'Villa Ejemplo',
-           'DEPARTAMENTO': 'Tu departamento', 'LEMA': 'Tu campaña', 'EQUIPO': 'Equipo de ejemplo',
+           'DEPARTAMENTO': 'Departamento Ejemplo', 'LEMA': 'Tu campaña', 'EQUIPO': 'Equipo de ejemplo',
            'COLOR': '#0063D8', 'COLOR_700': '#004FAD', 'APP_ICON': '/__assets/logo.png',
            'APP_BANNER': '/__assets/logo.png', 'IMG_BASE': '/__assets/', 'STORAGE_NS': 'demo'}
     for k, v in rep.items():
@@ -92,6 +92,8 @@ class Grab:
         self.pw = sync_playwright().start()
         self.br = self.pw.chromium.launch(args=['--force-color-profile=srgb', '--font-render-hinting=none'])
         self.ctx = self.br.new_context(service_workers='block', locale='es-CO', timezone_id='America/Bogota', **FORMATOS[fmt])
+        try: self.ctx.grant_permissions(['clipboard-read', 'clipboard-write'], origin=f'http://127.0.0.1:{PORT}')
+        except Exception: pass
         self.ctx.add_init_script('window.__TOUCH=%s;' % ('true' if fmt == 'v' else 'false') + CURSOR_JS)
         self.ctx.route('**/*', self._ruta)
         self.page = self.ctx.new_page()
@@ -203,3 +205,12 @@ class Grab:
 
     def js(self, code, arg=None):
         return self.page.evaluate(code, arg)
+
+    def entrar(self, pin='2580', ruta='#/home'):
+        """Fuera de cámara: deja la sesión abierta y se para en la ruta."""
+        self.ir(); self.espera(1200)
+        self.js("() => { sessionStorage.setItem(nsKey('continuedWeb'),'1'); go('login'); }"); self.espera(800)
+        for k in pin: self.page.locator(f'.pin-key[data-key="{k}"]').click()
+        self.page.wait_for_selector('.appbar', timeout=15000); self.espera(1500)
+        if ruta and ruta != '#/home':
+            self.js(f"() => go('{ruta[2:]}')"); self.espera(2500)
