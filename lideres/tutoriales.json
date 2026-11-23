@@ -105,11 +105,11 @@
     "preparar",
     "offline"
    ],
-   "youtube": "",
-   "short": "",
+   "youtube": "https://youtu.be/3TUpvuhC-bI",
+   "short": "https://youtube.com/shorts/HE68e-hpGhc",
    "shortImg": "lideres/img/L02v.jpg",
    "duracion": "1:45",
-   "activo": false,
+   "activo": true,
    "capitulos": [
     [
      "0:00",
