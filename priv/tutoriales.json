@@ -73,11 +73,11 @@
     "validación",
     "eliminar"
    ],
-   "youtube": "",
-   "short": "",
+   "youtube": "https://youtu.be/JGCPJBaP3fs",
+   "short": "https://youtube.com/shorts/fKpmVwuZRP4",
    "shortImg": "priv/img/P03v.jpg",
    "duracion": "1:50",
-   "activo": false
+   "activo": true
   },
   {
    "id": "P04",
