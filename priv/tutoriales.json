@@ -98,11 +98,11 @@
     "exportar",
     "pdf"
    ],
-   "youtube": "",
-   "short": "",
+   "youtube": "https://youtu.be/CY4QppiWSU8",
+   "short": "https://youtube.com/shorts/1-BqeYDOUc0",
    "shortImg": "priv/img/P04v.jpg",
    "duracion": "2:20",
-   "activo": false
+   "activo": true
   },
   {
    "id": "P05",
