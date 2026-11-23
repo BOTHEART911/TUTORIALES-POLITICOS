@@ -252,11 +252,11 @@
     "permisos",
     "configuración"
    ],
-   "youtube": "",
-   "short": "",
+   "youtube": "https://youtu.be/rxRC1Y8AOFo",
+   "short": "https://youtube.com/shorts/1lMrwduKK3o",
    "shortImg": "priv/img/P11v.jpg",
    "duracion": "1:38",
-   "activo": false
+   "activo": true
   },
   {
    "id": "P12",
