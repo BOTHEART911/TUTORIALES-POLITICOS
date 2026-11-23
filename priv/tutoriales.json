@@ -1,5 +1,5 @@
 {
- "version": 1,
+ "version": 2,
  "actualizado": "2026-11-22",
  "app": "PRIV",
  "temas": [
@@ -33,7 +33,57 @@
    "short": "https://youtube.com/shorts/xv-2PJS6hCs",
    "shortImg": "priv/img/P01v.jpg",
    "duracion": "1:44",
-   "activo": true
+   "activo": true,
+   "capitulos": [
+    [
+     "0:00",
+     "Introducción"
+    ],
+    [
+     "0:03",
+     "Qué es el panel privado"
+    ],
+    [
+     "0:11",
+     "Instalar la app (computador e iPhone)"
+    ],
+    [
+     "0:23",
+     "Entrar con tu PIN de 4 números"
+    ],
+    [
+     "0:33",
+     "Si te equivocas de PIN"
+    ],
+    [
+     "0:41",
+     "Tu Inicio: nombre, rol y módulos"
+    ],
+    [
+     "0:52",
+     "Poner tu foto de perfil"
+    ],
+    [
+     "1:00",
+     "El robot Analizar: resumen de la vista"
+    ],
+    [
+     "1:14",
+     "Ir a otra vista con el botón de los cuadritos"
+    ],
+    [
+     "1:23",
+     "Cambiar de cuenta en un equipo compartido"
+    ],
+    [
+     "1:32",
+     "Salir de la app"
+    ],
+    [
+     "1:39",
+     "Siguiente tutorial"
+    ]
+   ]
   },
   {
    "id": "P02",
@@ -55,7 +105,65 @@
    "short": "https://youtube.com/shorts/oe1moy251oE",
    "shortImg": "priv/img/P02v.jpg",
    "duracion": "2:31",
-   "activo": true
+   "activo": true,
+   "capitulos": [
+    [
+     "0:00",
+     "Introducción"
+    ],
+    [
+     "0:03",
+     "Qué muestra cada tarjeta"
+    ],
+    [
+     "0:14",
+     "Buscar por nombre, documento o barrio"
+    ],
+    [
+     "0:23",
+     "Filtrar con las pastillas y sus conteos"
+    ],
+    [
+     "0:33",
+     "Ver los referidos de un líder"
+    ],
+    [
+     "0:46",
+     "La franja de crecimiento por mes"
+    ],
+    [
+     "0:54",
+     "Agregar un contacto: el documento primero (sin repetidos)"
+    ],
+    [
+     "1:10",
+     "Completar los datos y crear la tarjeta"
+    ],
+    [
+     "1:26",
+     "Consultar el puesto: copiar y abrir la Registraduría"
+    ],
+    [
+     "1:35",
+     "La consulta en la página de la Registraduría"
+    ],
+    [
+     "1:47",
+     "Pegar, leer los datos y guardar el puesto"
+    ],
+    [
+     "2:05",
+     "A la espera y Por confirmar con su motivo"
+    ],
+    [
+     "2:19",
+     "Cierre"
+    ],
+    [
+     "2:26",
+     "Siguiente tutorial"
+    ]
+   ]
   },
   {
    "id": "P03",
@@ -77,7 +185,57 @@
    "short": "https://youtube.com/shorts/fKpmVwuZRP4",
    "shortImg": "priv/img/P03v.jpg",
    "duracion": "1:50",
-   "activo": true
+   "activo": true,
+   "capitulos": [
+    [
+     "0:00",
+     "Introducción"
+    ],
+    [
+     "0:03",
+     "Abrir la ficha de una persona"
+    ],
+    [
+     "0:09",
+     "Trazabilidad: resumen e historia de gestiones"
+    ],
+    [
+     "0:24",
+     "Pestaña Datos"
+    ],
+    [
+     "0:32",
+     "Constancia de gestión en PDF"
+    ],
+    [
+     "0:42",
+     "Editar los datos"
+    ],
+    [
+     "0:54",
+     "Marcar Por confirmar con su motivo"
+    ],
+    [
+     "1:04",
+     "Validación: mensaje para los líderes"
+    ],
+    [
+     "1:16",
+     "Por eliminar: fallecidos confirmados por el líder"
+    ],
+    [
+     "1:29",
+     "Inactivar sin borrar"
+    ],
+    [
+     "1:39",
+     "Cierre"
+    ],
+    [
+     "1:45",
+     "Siguiente tutorial"
+    ]
+   ]
   },
   {
    "id": "P04",
@@ -102,7 +260,57 @@
    "short": "https://youtube.com/shorts/1-BqeYDOUc0",
    "shortImg": "priv/img/P04v.jpg",
    "duracion": "2:20",
-   "activo": true
+   "activo": true,
+   "capitulos": [
+    [
+     "0:00",
+     "Introducción"
+    ],
+    [
+     "0:03",
+     "Trabajar en bloque y sin señal"
+    ],
+    [
+     "0:12",
+     "Descargar y llenar la plantilla de puestos"
+    ],
+    [
+     "0:32",
+     "Actualización masiva: vista previa antes de guardar"
+    ],
+    [
+     "0:43",
+     "Actualizar y descargar el respaldo"
+    ],
+    [
+     "0:54",
+     "Reasignar líder y «Pasar a»"
+    ],
+    [
+     "1:06",
+     "Sin señal: qué puedes hacer"
+    ],
+    [
+     "1:17",
+     "Anotar contactos en Pendientes"
+    ],
+    [
+     "1:39",
+     "Volvió la señal: revisar y subir al líder destino"
+    ],
+    [
+     "1:59",
+     "Exportar a Excel o PDF"
+    ],
+    [
+     "2:08",
+     "Cierre"
+    ],
+    [
+     "2:15",
+     "Siguiente tutorial"
+    ]
+   ]
   },
   {
    "id": "P05",
@@ -125,7 +333,53 @@
    "short": "https://youtube.com/shorts/11VoO4v_L58",
    "shortImg": "priv/img/P05v.jpg",
    "duracion": "2:07",
-   "activo": true
+   "activo": true,
+   "capitulos": [
+    [
+     "0:00",
+     "Introducción"
+    ],
+    [
+     "0:03",
+     "Las tarjetas: colores por referidos y barra de trabajo"
+    ],
+    [
+     "0:21",
+     "Buscar y filtrar por clasificación"
+    ],
+    [
+     "0:34",
+     "La ficha del líder"
+    ],
+    [
+     "0:47",
+     "Registrar un líder nuevo"
+    ],
+    [
+     "1:10",
+     "Editar sus datos y su clasificación"
+    ],
+    [
+     "1:18",
+     "Tablero: crecimiento y puntaje de gestión"
+    ],
+    [
+     "1:31",
+     "Memoria mensual y balance en PDF"
+    ],
+    [
+     "1:43",
+     "Eliminar un líder y traspasar sus referidos"
+    ],
+    [
+     "1:57",
+     "Cierre"
+    ],
+    [
+     "2:02",
+     "Siguiente tutorial"
+    ]
+   ]
   },
   {
    "id": "P06",
@@ -146,7 +400,45 @@
    "short": "https://youtube.com/shorts/4edeTU3ljFQ",
    "shortImg": "priv/img/P06v.jpg",
    "duracion": "1:58",
-   "activo": true
+   "activo": true,
+   "capitulos": [
+    [
+     "0:00",
+     "Introducción"
+    ],
+    [
+     "0:03",
+     "Referidos del líder: buscar y filtrar por intención"
+    ],
+    [
+     "0:19",
+     "Pasar varios referidos a otro líder"
+    ],
+    [
+     "0:37",
+     "Mensajes listos: bienvenida, tarea OK y recordatorio"
+    ],
+    [
+     "0:51",
+     "Ahijados y delegación del grupo"
+    ],
+    [
+     "1:10",
+     "Trabajo mes a mes y bitácora"
+    ],
+    [
+     "1:32",
+     "Informe de bitácoras en PDF o Excel"
+    ],
+    [
+     "1:47",
+     "Cierre"
+    ],
+    [
+     "1:53",
+     "Siguiente tutorial"
+    ]
+   ]
   },
   {
    "id": "P07",
@@ -168,7 +460,49 @@
    "short": "https://youtube.com/shorts/IUGJ1nevjB4",
    "shortImg": "priv/img/P07v.jpg",
    "duracion": "1:56",
-   "activo": true
+   "activo": true,
+   "capitulos": [
+    [
+     "0:00",
+     "Introducción"
+    ],
+    [
+     "0:03",
+     "El calendario: estados y vistas de año, mes y día"
+    ],
+    [
+     "0:20",
+     "Agregar una reunión"
+    ],
+    [
+     "0:40",
+     "Ver una reunión y enviar el mensaje directo"
+    ],
+    [
+     "0:52",
+     "Avisar al candidato y marcar Realizada"
+    ],
+    [
+     "1:06",
+     "Resumen de la mañana, la tarde o la noche"
+    ],
+    [
+     "1:15",
+     "Eventos: estados, asistentes y agregar"
+    ],
+    [
+     "1:31",
+     "Detalle del evento: asistentes en Excel y estado"
+    ],
+    [
+     "1:44",
+     "Cierre"
+    ],
+    [
+     "1:51",
+     "Siguiente tutorial"
+    ]
+   ]
   },
   {
    "id": "P08",
@@ -189,7 +523,45 @@
    "short": "https://youtube.com/shorts/jaw52Q0VEso",
    "shortImg": "priv/img/P08v.jpg",
    "duracion": "1:45",
-   "activo": true
+   "activo": true,
+   "capitulos": [
+    [
+     "0:00",
+     "Introducción"
+    ],
+    [
+     "0:03",
+     "Compromisos: contadores, cumplimiento y filtros"
+    ],
+    [
+     "0:24",
+     "Agregar un compromiso desde la base"
+    ],
+    [
+     "0:39",
+     "Detalles y bitácora del compromiso"
+    ],
+    [
+     "0:52",
+     "Enviar al asignado: WhatsApp directo o bot"
+    ],
+    [
+     "1:04",
+     "Cambiar el estado a Cumplido"
+    ],
+    [
+     "1:14",
+     "Solicitudes a los líderes"
+    ],
+    [
+     "1:33",
+     "Cierre"
+    ],
+    [
+     "1:41",
+     "Siguiente tutorial"
+    ]
+   ]
   },
   {
    "id": "P09",
@@ -211,7 +583,49 @@
    "short": "https://youtube.com/shorts/46Zs334azmU",
    "shortImg": "priv/img/P09v.jpg",
    "duracion": "2:16",
-   "activo": true
+   "activo": true,
+   "capitulos": [
+    [
+     "0:00",
+     "Introducción"
+    ],
+    [
+     "0:03",
+     "Formularios: estados, inscritos en vivo, cupo y cierre"
+    ],
+    [
+     "0:24",
+     "Crear un formulario con imagen y preguntas"
+    ],
+    [
+     "0:53",
+     "Vista previa y encender"
+    ],
+    [
+     "1:03",
+     "Compartir el enlace por WhatsApp"
+    ],
+    [
+     "1:11",
+     "Detalles: inscritos, respuestas y confirmar"
+    ],
+    [
+     "1:28",
+     "Agregar inscritos a la base con su líder"
+    ],
+    [
+     "1:46",
+     "Ponte al día: publicar una noticia con aviso"
+    ],
+    [
+     "2:03",
+     "Cierre"
+    ],
+    [
+     "2:12",
+     "Siguiente tutorial"
+    ]
+   ]
   },
   {
    "id": "P10",
@@ -235,7 +649,45 @@
    "short": "https://youtube.com/shorts/y8HR5AWzzro",
    "shortImg": "priv/img/P10v.jpg",
    "duracion": "1:41",
-   "activo": true
+   "activo": true,
+   "capitulos": [
+    [
+     "0:00",
+     "Introducción"
+    ],
+    [
+     "0:03",
+     "Dashboard: registros por zona de residencia"
+    ],
+    [
+     "0:20",
+     "Por puesto, intención de voto y descargas"
+    ],
+    [
+     "0:31",
+     "Simulador: cuenta regresiva, puestos y mesas"
+    ],
+    [
+     "0:48",
+     "Votación en vivo el día de la elección"
+    ],
+    [
+     "1:02",
+     "Análisis de procesos: resumen y puntos de atención"
+    ],
+    [
+     "1:16",
+     "Detalle de servicios por servicio y por profesional"
+    ],
+    [
+     "1:28",
+     "Cierre"
+    ],
+    [
+     "1:36",
+     "Siguiente tutorial"
+    ]
+   ]
   },
   {
    "id": "P11",
@@ -256,7 +708,45 @@
    "short": "https://youtube.com/shorts/1lMrwduKK3o",
    "shortImg": "priv/img/P11v.jpg",
    "duracion": "1:38",
-   "activo": true
+   "activo": true,
+   "capitulos": [
+    [
+     "0:00",
+     "Introducción"
+    ],
+    [
+     "0:03",
+     "Configuración: pestañas y enlaces de las apps"
+    ],
+    [
+     "0:26",
+     "Plantillas de mensajes y vista previa"
+    ],
+    [
+     "0:36",
+     "Usuarios: agregar y elegir el rol"
+    ],
+    [
+     "0:53",
+     "Permisos del invitado y candados"
+    ],
+    [
+     "1:08",
+     "Enviar la bienvenida con el PIN"
+    ],
+    [
+     "1:16",
+     "Así entra el invitado"
+    ],
+    [
+     "1:26",
+     "Cierre"
+    ],
+    [
+     "1:33",
+     "Siguiente tutorial"
+    ]
+   ]
   },
   {
    "id": "P12",
@@ -276,7 +766,38 @@
    "short": "https://youtube.com/shorts/wbmEjJ7inJM",
    "shortImg": "priv/img/P12v.jpg",
    "duracion": "1:25",
-   "activo": true
+   "activo": true,
+   "capitulos": [
+    [
+     "0:00",
+     "Introducción"
+    ],
+    [
+     "0:03",
+     "Estado del bot"
+    ],
+    [
+     "0:17",
+     "Conectar WhatsApp con el código QR"
+    ],
+    [
+     "0:36",
+     "Controles: reiniciar, silenciar y eliminar sesión"
+    ],
+    [
+     "0:50",
+     "Bloquear un número y limpiar la conversación"
+    ],
+    [
+     "1:04",
+     "Números bloqueados y desbloquear"
+    ],
+    [
+     "1:12",
+     "Cierre de la serie"
+    ]
+   ]
   }
- ]
+ ],
+ "campanas": {}
 }
