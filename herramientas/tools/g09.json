@@ -1,0 +1,63 @@
+{
+ "id": "T09",
+ "titulo": "Formularios y Ponte al día",
+ "sub": "Inscripciones en la web y noticias para la gente",
+ "num": 9,
+ "siguiente": "Mide la campaña",
+ "escenas": [
+  {
+   "id": "s1",
+   "zoom": 1.15,
+   "voz": "En Formularios armas las inscripciones de la campaña: una jornada, un curso, un torneo. Cada tarjeta muestra su imagen, su estado, cuántos inscritos lleva frente al cupo y la fecha de cierre; los encendidos cuentan en vivo. Las pastillas filtran entre creados, encendidos y apagados."
+  },
+  {
+   "id": "s2",
+   "zoom": 1.35,
+   "voz": "Toca Crear formulario. Ponle nombre y una imagen. Los datos básicos de la persona ya vienen incluidos: documento, nombre, WhatsApp y residencia. Con Agregar pregunta sumas las tuyas: texto, número, selección única o múltiple, fecha, foto o archivo. Escribe la pregunta y sus opciones, márcala como obligatoria si hace falta, define el cupo y toca Crear formulario: queda en estado Creado."
+  },
+  {
+   "id": "s3",
+   "zoom": 1.3,
+   "voz": "Con Vista previa lo ves tal como saldrá en la web. Cuando esté listo, toca Encender y confirma: desde ese momento la gente se puede inscribir."
+  },
+  {
+   "id": "s4",
+   "zoom": 1.35,
+   "voz": "Con Enviar compartes el enlace por WhatsApp con el mensaje listo, para mandarlo a tus grupos y contactos."
+  },
+  {
+   "id": "s5",
+   "zoom": 1.3,
+   "voz": "En Detalles ves a los inscritos: cuántos hay, cuántos están confirmados y cuántos ya están en la base. Toca una tarjeta para ver sus respuestas. Escríbele por WhatsApp con el mensaje para confirmar y márcalo como Confirmado; queda quién lo confirmó y cuándo."
+  },
+  {
+   "id": "s6",
+   "zoom": 1.3,
+   "voz": "Los que no están en la base se agregan en bloque. Filtra por No están y toca Agregar a la base y asignar líder. Selecciona a las personas, elige el líder de la lista y toca Agregar. Entran a la base de datos con ese líder, listos para su seguimiento."
+  },
+  {
+   "id": "s7",
+   "zoom": 1.3,
+   "voz": "Ponte al día es la sección de noticias de la app pública, y se escribe desde Notificaciones. Toca Agregar, escribe el título y la noticia, y mira abajo cómo se verá. Al guardar se publica y llega un aviso a todos los que activaron las notificaciones."
+  },
+  {
+   "id": "s8",
+   "zoom": 1.0,
+   "voz": "Así cada actividad tiene su inscripción, sus inscritos terminan en la base, y la gente se entera de todo desde su celular."
+  }
+ ],
+ "mini": {
+  "texto": "Inscribe y avisa",
+  "linea2": "Formularios y Ponte al día",
+  "escena_h": "s1",
+  "q_h": 0.5,
+  "recorte_h": [
+   0.05,
+   0.08,
+   0.95,
+   0.98
+  ],
+  "escena_v": "s1",
+  "q_v": 0.02
+ }
+}

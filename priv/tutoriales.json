@@ -196,7 +196,7 @@
    "orden": 9,
    "tema": "Gestión",
    "titulo": "Formularios y Ponte al día",
-   "descripcion": "Crear y publicar un formulario, confirmar inscritos y publicar una noticia.",
+   "descripcion": "Crea formularios de inscripción, confirma a los inscritos, pásalos a la base y publica noticias en Ponte al día.",
    "rutas": [
     "formularios",
     "notificaciones"
@@ -209,8 +209,8 @@
    ],
    "youtube": "",
    "short": "",
-   "shortImg": "",
-   "duracion": "",
+   "shortImg": "priv/img/P09v.jpg",
+   "duracion": "2:16",
    "activo": false
   },
   {

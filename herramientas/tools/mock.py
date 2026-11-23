@@ -355,6 +355,43 @@ def responder(accion, params, cuerpo):
         return {'ok': True, 'entries': c['traza'], 'resumen': c['trazaResumen'], 'card': c}
     if accion in ('priv.compromisoWaBot', 'priv.solicitudWaBot'):
         return {'ok': True, 'msg': 'Enviado por el bot de WhatsApp'}
+    if accion == 'priv.formularios':
+        return {'ok': True, 'items': FORMS}
+    if accion == 'priv.formImagen':
+        return {'ok': True, 'id': 'img_nueva'}
+    if accion == 'priv.formGuardar':
+        it = {'id': 'F' + str(10 + len(FORMS)), 'nombre': p.get('nombre', ''), 'estado': 'CREADO', 'imagen': '/__assets/form5.jpg' if (p.get('imagenId') or p.get('imagen')) and p.get('imagen') != 'QUITAR' else '',
+              'n': 0, 'cupo': p.get('cupo') or '', 'cierre': p.get('cierre') or '', 'varios': bool(p.get('varios')), 'menores': bool(p.get('menores')),
+              'campos': p.get('campos') or [], 'creado': _ahora(), 'autor': 'Laura Gómez Ruiz', 'slug': 'nuevo', 'editable': True}
+        FORMS.insert(0, it); return {'ok': True, 'item': it}
+    if accion == 'priv.formEncender':
+        it = next(x for x in FORMS if x['id'] == p.get('id')); it.update(estado='ENCENDIDO', encendido=_ahora(), ajustable=True); return {'ok': True, 'item': it}
+    if accion == 'priv.formApagar':
+        it = next(x for x in FORMS if x['id'] == p.get('id')); it.update(estado='APAGADO', apagado=_ahora()); return {'ok': True, 'item': it}
+    if accion == 'priv.formRegistros':
+        f = next((x for x in FORMS if x['id'] == p.get('id')), FORMS[0])
+        return {'ok': True, 'items': FREG.get(f['id'], []), 'form': {'nombre': f['nombre'], 'campos': f['campos'], 'marcable': True},
+                'wa': {'plantilla': 'Hola {nombre_corto} 👋, te escribe {Usuario_app} del equipo de {nombre_candidato}.\n\nRecibimos tu inscripción en *{nombre_formulario}*. ¿Nos confirmas tu asistencia?', 'candidato': 'Candidato Ejemplo'}}
+    if accion == 'priv.formMarcar':
+        return {'ok': True, 'conf': {'por': 'Laura Gómez Ruiz', 'fecha': _ahora()} if p.get('accion') == 'confirmar' else None}
+    if accion == 'priv.formAgregarBd':
+        lid = next((l for l in LIDERES_FULL if l['codigo'] == str(p.get('referencia'))), LIDERES_FULL[0])
+        docs = p.get('documentos') or []
+        if isinstance(docs, str):
+            import json as _j
+            try: docs = _j.loads(docs)
+            except Exception: docs = docs.split(',')
+        return {'ok': True, 'lider': {'codigo': lid['codigo'], 'nombre': lid['nombre']}, 'agregados': docs, 'yaEstaban': [], 'n': len(docs)}
+    if accion == 'priv.notificaciones':
+        cont = {}
+        for x in NOTIS: cont[x['estado']] = cont.get(x['estado'], 0) + 1
+        return {'ok': True, 'items': NOTIS, 'contadores': cont, 'alcance': 1240, 'pushTitulo': 'Candidato Ejemplo', 'firebaseListo': True}
+    if accion == 'priv.notifVer':
+        return {'ok': True, 'noticia': next(x for x in NOTIS if str(x['id']) == str(p.get('id')))}
+    if accion == 'priv.notifGuardar':
+        n = {'id': str(900 + len(NOTIS)), 'titulo': p.get('titulo', ''), 'cuerpo': p.get('cuerpo', ''), 'enlace': p.get('enlace', ''), 'estado': 'PUBLICADA' if p.get('enviar') else 'BORRADOR',
+             'fecha': dt.datetime.now().strftime('%d/%m/%Y %H:%M'), 'ts': int(dt.datetime.now().timestamp() * 1000), 'enviados': 1238 if p.get('enviar') else 0, 'fallidos': 2 if p.get('enviar') else 0}
+        NOTIS.insert(0, n); return {'ok': True, 'card': n, 'push': {'enviados': 1238} if p.get('enviar') else None}
     if accion in ('priv.lideres_x',):
         return {'ok': True, 'items': [], 'rv': {}}
     FALTAN.append(accion)
@@ -433,3 +470,33 @@ def _sl(k, txt, asg, est, dias):
 SOLI = [_sl(101, 'Convocar a tus referidos a la caminata del sábado.', 'Ana Rojas Peña', 'ASIGNADO', 1),
         _sl(102, 'Actualizar la intención de voto de tus referidos sin preguntar.', 'Jorge Castro León', 'PENDIENTE', 6),
         _sl(103, 'Enviar fotos de la reunión del barrio para redes.', 'Paola Vargas Cruz', 'CUMPLIDO', 10)]
+
+
+def _ahora():
+    return dt.datetime.now().strftime('%Y-%m-%d %H:%M')
+def _dias(d, h='09:00'):
+    return (dt.date.today() + dt.timedelta(days=d)).strftime('%Y-%m-%d') + ' ' + h
+_C1 = [{'id': 'c1', 'tipo': 'unica', 'etiqueta': '¿Qué jornada prefieres?', 'req': True, 'opciones': ['Mañana', 'Tarde']},
+       {'id': 'c2', 'tipo': 'numero', 'etiqueta': '¿Cuántas personas de tu familia asisten?', 'req': False, 'entero': True, 'min': 1, 'max': 6}]
+FORMS = [
+    {'id': 'F1', 'nombre': 'Jornada de salud oral', 'estado': 'ENCENDIDO', 'imagen': '/__assets/form1.jpg', 'n': 16, 'cupo': 40, 'cierre': _dias(6, '18:00'), 'campos': _C1,
+     'creado': _dias(-9), 'encendido': _dias(-8), 'autor': 'Laura Gómez Ruiz', 'slug': 'salud-oral', 'ajustable': True},
+    {'id': 'F2', 'nombre': 'Curso de modistería', 'estado': 'ENCENDIDO', 'imagen': '/__assets/form2.jpg', 'n': 23, 'cupo': 30, 'espera': 2, 'campos': [], 'creado': _dias(-15), 'encendido': _dias(-14), 'autor': 'Diego Rincón', 'slug': 'modisteria', 'ajustable': True},
+    {'id': 'F3', 'nombre': 'Caminata ecológica', 'estado': 'APAGADO', 'imagen': '/__assets/form3.jpg', 'n': 112, 'campos': [], 'varios': True, 'creado': _dias(-40), 'apagado': _dias(-20), 'autor': 'Laura Gómez Ruiz', 'slug': 'caminata'},
+    {'id': 'F4', 'nombre': 'Torneo de microfútbol', 'estado': 'CREADO', 'imagen': '/__assets/form4.jpg', 'n': 0, 'cupo': 16, 'campos': [], 'creado': _dias(-1), 'autor': 'Laura Gómez Ruiz', 'slug': 'torneo', 'editable': True}]
+def _freg():
+    out = []; lid = LIDERES_FULL
+    for i, x in enumerate(PERSONAS[5:21]):
+        bd = {'lider': lid[i % 5]['nombre'], 'ref': lid[i % 5]['codigo']} if i % 3 != 0 else None
+        out.append({'documento': x['documento'], 'nombre': x['nombre'], 'whatsapp': '300555' + str(7000 + i), 'residencia': x['residencia'], 'fecha': _dias(-(i % 7), '1%d:%02d' % (i % 9, (i * 7) % 60)),
+                    'codigo': 'SO-%03d' % (16 - i), 'bd': bd, 'conf': {'por': 'Diego Rincón', 'fecha': _dias(-1, '16:20')} if i in (1, 4) else None,
+                    'estado': 'ESPERA' if i == 15 else '', 'r': {'c1': 'Mañana' if i % 2 else 'Tarde', 'c2': 1 + i % 4}})
+    return out
+FREG = {'F1': _freg()}
+NOTIS = [
+    {'id': '801', 'titulo': 'Gracias, El Prado', 'cuerpo': 'Más de 200 vecinos nos acompañaron este sábado.\nSeguimos recorriendo barrio por barrio.', 'enlace': 'https://facebook.com/ejemplo', 'estado': 'PUBLICADA',
+     'fecha': (dt.datetime.now() - dt.timedelta(days=2)).strftime('%d/%m/%Y %H:%M'), 'ts': int((dt.datetime.now() - dt.timedelta(days=2)).timestamp() * 1000), 'enviados': 1196, 'fallidos': 4},
+    {'id': '802', 'titulo': 'Agenda de la semana', 'cuerpo': 'Lunes: Centro.\nMiércoles: Las Palmas.\nViernes: Vereda El Llano.', 'enlace': '', 'estado': 'BORRADOR',
+     'fecha': (dt.datetime.now() - dt.timedelta(days=1)).strftime('%d/%m/%Y %H:%M'), 'ts': int((dt.datetime.now() - dt.timedelta(days=1)).timestamp() * 1000), 'enviados': 0},
+    {'id': '803', 'titulo': 'Nuevo punto de inscripción', 'cuerpo': 'Ya puedes inscribirte en la sede del barrio San José.', 'enlace': 'https://instagram.com/ejemplo', 'estado': 'PUBLICADA',
+     'fecha': (dt.datetime.now() - dt.timedelta(days=6)).strftime('%d/%m/%Y %H:%M'), 'ts': int((dt.datetime.now() - dt.timedelta(days=6)).timestamp() * 1000), 'enviados': 1102, 'fallidos': 0}]
