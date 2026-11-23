@@ -20,6 +20,7 @@ FONT_CSS = ''.join(
 
 CURSOR_JS = r"""
 (() => {
+  window.open = (u) => { window.__waUlt = String(u); return null; };
   const st = document.createElement('style');
   st.textContent = `#__cur{position:fixed;left:0;top:0;z-index:2147483647;pointer-events:none;transition:transform var(--d,600ms) cubic-bezier(.4,0,.2,1);will-change:transform}
   #__cur.flecha svg{filter:drop-shadow(0 2px 3px rgba(0,0,0,.35))}
@@ -91,7 +92,7 @@ class Grab:
         self.srv = _servidor()
         self.pw = sync_playwright().start()
         self.br = self.pw.chromium.launch(args=['--force-color-profile=srgb', '--font-render-hinting=none'])
-        self.ctx = self.br.new_context(service_workers='block', locale='es-CO', timezone_id='America/Bogota', **FORMATOS[fmt])
+        self.ctx = self.br.new_context(accept_downloads=True, service_workers='block', locale='es-CO', timezone_id='America/Bogota', **FORMATOS[fmt])
         try: self.ctx.grant_permissions(['clipboard-read', 'clipboard-write'], origin=f'http://127.0.0.1:{PORT}')
         except Exception: pass
         self.ctx.add_init_script('window.__TOUCH=%s;' % ('true' if fmt == 'v' else 'false') + CURSOR_JS)
@@ -214,3 +215,32 @@ class Grab:
         self.page.wait_for_selector('.appbar', timeout=15000); self.espera(1500)
         if ruta and ruta != '#/home':
             self.js(f"() => go('{ruta[2:]}')"); self.espera(2500)
+
+    # ---------- vistas de apoyo (mensaje y PDF) ----------
+    def ver_mensaje(self, ms=3500):
+        """Lo que la app manda a WhatsApp (window.open) se muestra como vista previa neutra."""
+        self.js(r"""() => { const u = window.__waUlt || ''; const m = u.match(/[?&]text=([^&]*)/); const t = m ? decodeURIComponent(m[1]) : '';
+          const d = document.createElement('div'); d.id = '__wa';
+          d.innerHTML = `<div style="position:fixed;inset:0;z-index:2147483500;background:rgba(10,37,64,.55);display:flex;align-items:center;justify-content:center;padding:18px">
+            <div style="background:#fff;border-radius:18px;max-width:440px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.35);overflow:hidden;font:15px/1.45 Inter,system-ui,sans-serif">
+            <div style="background:#0A2540;color:#fff;padding:14px 18px;font-weight:700">Se abre WhatsApp con el mensaje listo</div>
+            <div style="padding:16px 18px;white-space:pre-wrap;color:#1f2937;background:#F4F6F9">${t.replace(/[<&]/g, c => c === '<' ? '&lt;' : '&amp;')}</div>
+            <div style="padding:10px 18px;color:#4B5B72;font-size:13px">Eliges el grupo o el contacto y lo envías.</div></div></div>`;
+          document.body.appendChild(d); }""")
+        self.espera(ms)
+        self.js("() => { const d = document.getElementById('__wa'); if (d) d.remove(); }")
+
+    def ver_pdf(self, descarga, ms=3500):
+        import subprocess, base64 as b64
+        ruta = self.salida + '/descarga.pdf'; descarga.save_as(ruta)
+        subprocess.run(['pdftoppm', '-png', '-r', '110', '-f', '1', '-l', '1', ruta, self.salida + '/pdf'], check=True)
+        png = [f for f in os.listdir(self.salida) if f.startswith('pdf') and f.endswith('.png')][0]
+        data = b64.b64encode(open(os.path.join(self.salida, png), 'rb').read()).decode()
+        self.js("""(src) => { const d = document.createElement('div'); d.id = '__pdf';
+          d.innerHTML = `<div style="position:fixed;inset:0;z-index:2147483500;background:rgba(10,37,64,.6);display:flex;align-items:center;justify-content:center;padding:16px">
+          <div style="background:#fff;border-radius:10px;box-shadow:0 20px 60px rgba(0,0,0,.4);overflow:hidden;max-height:94vh;max-width:94vw">
+          <div style="background:#0A2540;color:#fff;padding:8px 14px;font:600 13px Inter,system-ui">PDF descargado</div>
+          <img src="${src}" style="display:block;max-height:calc(94vh - 36px);max-width:94vw"></div></div>`;
+          document.body.appendChild(d); }""", 'data:image/png;base64,' + data)
+        self.espera(ms)
+        self.js("() => { const d = document.getElementById('__pdf'); if (d) d.remove(); }")

@@ -7,8 +7,10 @@ prog = [[60, 64, 67, 71], [57, 60, 64, 67], [53, 57, 60, 64], [55, 59, 62, 67]] 
 L = np.zeros(n); R = np.zeros(n)
 compas = 4 * beat
 def env_adsr(m, a, r):
-    e = np.ones(m); ka = int(a * SR); kr = int(r * SR)
-    e[:ka] = np.linspace(0, 1, ka); e[-kr:] *= np.linspace(1, 0, kr); return e
+    e = np.ones(m); ka = min(int(a * SR), m // 2); kr = min(int(r * SR), m - ka)
+    e[:ka] = np.linspace(0, 1, ka)
+    if kr > 0: e[m - kr:] *= np.linspace(1, 0, kr)
+    return e
 k = 0; c = 0
 while k * compas < dur:
     ch = prog[c % 4]; i0 = int(k * compas * SR); m = min(int(compas * SR) + int(.6 * SR), n - i0)

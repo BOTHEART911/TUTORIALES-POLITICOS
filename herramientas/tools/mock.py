@@ -58,6 +58,10 @@ def _personas(n=64):
 
 
 PERSONAS = _personas()
+for k, (nom, doc) in enumerate([('Alberto Gómez Silva', '1000007001'), ('Inés Moreno Cano', '1000007002')]):
+    PERSONAS.append({'documento': doc, 'nombre': nom, 'residencia': 'Centro', 'municipio': 'POR CONFIRMAR', 'intencion': '', 'estado': 'INACTIVO',
+        'fechaRegistro': _fecha(HOY - dt.timedelta(days=90 + k)), 'fechaActualizacion': _fecha(HOY - dt.timedelta(days=2)), 'esLider': False, 'foto': '',
+        'puestoCrudo': '', 'mesa': '', 'motivo': 'FALLECIDO · CONFIRMADO POR EL LÍDER', 'telefono': '', 'referencia': '2'})
 LIDERES = [{'codigo': str(k + 1), 'nombre': n} for k, n in enumerate(['Ana Rojas Peña', 'Jorge Castro León', 'Paola Vargas Cruz', 'Felipe Ortiz Ríos', 'Camila Peña Torres', 'Rosa León Duarte'])]
 EXISTE = {'1000000951': 'Jorge Peña Herrera'}
 for x in PERSONAS: EXISTE[x['documento']] = x['nombre']
@@ -105,7 +109,7 @@ def responder(accion, params, cuerpo):
         return {'ok': True, 'foto': FOTO['v']}
     if accion == 'priv.baseDatos':
         return {'ok': True, 'items': PERSONAS, 'lideres': LIDERES,
-                'columnas': [], 'dash': {'puestos': PUESTOS, 'puestoOtro': 'OTRO MUNICIPIO'}, 'rv': {}, 'registraduriaUrl': 'https://consultacenso.registraduria.gov.co/'}
+                'columnas': [], 'dash': {'puestos': PUESTOS, 'puestoOtro': 'OTRO MUNICIPIO'}, 'rv': {}, 'registraduriaUrl': 'https://consultacenso.registraduria.gov.co/', 'pc': {'candidato': 'Candidato Ejemplo', 'plantilla': 'Buen día estimados líderes:\n\nLa base de datos se actualizó y hay {n} documentos por validar. Por favor revisen si tienen alguno ustedes o sus ahijados en la app: zona de líderes → Mis referidos.\n\nCordialmente,\n{nombre_candidato}'}}
     if accion == 'pub.residencias':
         return BARRIOS
     if accion == 'priv.validarDoc':
@@ -119,10 +123,26 @@ def responder(accion, params, cuerpo):
         return {'ok': True, 'card': c}
     if accion == 'priv.puestoGuardar':
         c = next((x for x in PERSONAS if x['documento'] == str(p.get('documento'))), None)
-        if c:
+        if c and p.get('marca'):
+            c.update({'municipio': p['marca'], 'motivo': p.get('motivo', ''), 'fechaActualizacion': _fecha(dt.date.today())})
+        elif c:
             mun = str(p.get('municipio', '')).strip()
             c.update({'municipio': 'Villa Ejemplo' if mun.upper() == 'VILLA EJEMPLO' else mun.title(), 'puestoCrudo': p.get('puesto', ''), 'mesa': p.get('mesa', ''), 'fechaActualizacion': _fecha(dt.date.today())})
         return {'ok': True, 'card': c}
+    if accion in ('priv.trazabilidad', 'priv.persona'):
+        return _traza(str(p.get('documento', '')))
+    if accion == 'priv.trazabilidadLote':
+        return {'ok': True, 'mapa': {d: _traza(d) for d in str(p.get('docs', '')).split(',') if d}}
+    if accion == 'priv.personaEditar':
+        c = _fila(p.get('documentoOriginal'))
+        if c: c.update({'nombre': p.get('nombre', c['nombre']), 'residencia': p.get('residencia', c['residencia']), 'telefono': p.get('contacto', ''), 'referencia': p.get('referencia', ''), 'fechaActualizacion': _fecha(dt.date.today())})
+        return {'ok': True, 'card': c}
+    if accion == 'priv.personaInactivar':
+        c = _fila(p.get('documento')); c['estado'] = 'INACTIVO'; return {'ok': True, 'card': c}
+    if accion == 'priv.personaEliminar':
+        c = _fila(p.get('documento'))
+        if c: PERSONAS.remove(c)
+        return {'ok': True}
     if accion == 'priv.agenda':
         return {'ok': True, 'items': AGENDA, 'estricta': False, 'esDev': False}
     if accion == 'priv.agendaMeta':
@@ -153,3 +173,33 @@ def _ia_bd():
 
 
 IA_TEXTO = {'bd': _ia_bd()}
+
+
+def _fila(d):
+    return next((x for x in PERSONAS if x['documento'] == str(d)), None)
+
+
+def _iso(dd, h='10:30'):
+    return dd.strftime('%Y-%m-%d') + ' ' + h
+
+
+def _traza(d):
+    c = _fila(d) or {}
+    lid = next((l for l in LIDERES if l['codigo'] == c.get('referencia')), None)
+    persona = {'NOMBRE': c.get('nombre', ''), 'DOCUMENTO': d, 'CONTACTO': c.get('telefono', ''), 'RESIDENCIA': c.get('residencia', ''),
+               'REFERENCIA': c.get('referencia', ''), 'LIDER': lid['nombre'] if lid else '', 'DEPARTAMENTO': 'DEPARTAMENTO EJEMPLO' if c.get('puestoCrudo') else '',
+               'MUNICIPIO': c.get('municipio', ''), 'PUESTO': c.get('puestoCrudo', ''), 'DIRECCION': 'CALLE 5 # 3-10' if c.get('puestoCrudo') else '',
+               'MESA': c.get('mesa', ''), 'ESTADO': c.get('estado', 'ACTIVO'), 'INTENCION': c.get('intencion', ''), 'FECHA_REGISTRO': c.get('fechaRegistro', ''),
+               'FECHA_ACTUALIZACION': c.get('fechaActualizacion', '')}
+    base = HOY - dt.timedelta(days=60)
+    items = [
+        {'k': 'formulario', 'tit': 'Inscripción: Jornada de salud', 'det': 'Se inscribió desde la app pública', 'est': 'CONFIRMADO', 'f': _iso(HOY - dt.timedelta(days=3), '09:15')},
+        {'k': 'compromiso', 'tit': 'Arreglo del alumbrado de su calle', 'det': 'Gestionado con la junta de acción comunal', 'est': 'CUMPLIDO', 'f': _iso(HOY - dt.timedelta(days=9), '16:40')},
+        {'k': 'evento', 'tit': 'Asistió: Encuentro con comerciantes', 'det': 'Plaza principal', 'est': '', 'f': _iso(HOY - dt.timedelta(days=16), '15:05')},
+        {'k': 'servicio', 'tit': 'Servicio: Asesoría jurídica', 'det': 'Atendido por profesional de la casa social', 'est': 'ATENDIDO', 'f': _iso(HOY - dt.timedelta(days=24), '11:20')},
+        {'k': 'datos', 'tit': 'Datos actualizados', 'det': 'Cambio de WhatsApp', 'est': '', 'f': _iso(HOY - dt.timedelta(days=33), '08:50')},
+        {'k': 'lider', 'tit': 'Referido por ' + (lid['nombre'] if lid else 'un líder'), 'det': '', 'est': '', 'f': ''},
+        {'k': 'alta', 'tit': 'Registro en la base de datos', 'det': 'Agregado desde el panel privado', 'est': '', 'f': _iso(base, '10:00')},
+    ]
+    return {'ok': True, 'persona': persona, 'esLider': bool(c.get('esLider')), 'items': items, 'total': len(items),
+            'resumen': {'servicios': 1, 'serviciosAtendidos': 1, 'compromisos': 1, 'compromisosCumplidos': 1, 'eventos': 1, 'formularios': 1}, 'rv': {}}
