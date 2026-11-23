@@ -118,7 +118,7 @@ EVENTOS = [{'id': str(30 + k), 'evento': e, 'fecha': _fecha(dt.date.today() + dt
 
 
 def _user(u, tk='tk-ejemplo'):
-    return dict(u, tk=tk, foto=FOTO['v'], permisos=None)
+    return dict(u, tk=tk, foto=FOTO['v'] if u.get('rol') == 'ADMIN' else '', permisos=u.get('permisos'))
 
 
 def responder(accion, params, cuerpo):
@@ -131,6 +131,9 @@ def responder(accion, params, cuerpo):
             return {'ok': False, 'msg': 'PIN incorrecto'}
         return {'ok': True, 'user': _user(u)}
     if accion == 'priv.miPerfil':
+        u = next((x for x in USUARIOS.values() if x['documento'] == str(p.get('caller'))), None)
+        if u and u.get('rol') == 'INVITADO':
+            return {'ok': True, 'foto': '', 'permisos': u.get('permisos'), 'rol': 'INVITADO'}
         return {'ok': True, 'foto': FOTO['v'], 'permisos': None, 'rol': 'ADMIN'}
     if accion in ('priv.miFoto', 'priv.subirMiFoto', 'priv.fotoPerfil'):
         FOTO['v'] = '/__assets/foto_laura.png'
@@ -402,6 +405,34 @@ def responder(accion, params, cuerpo):
     if accion == 'priv.analisis':
         return {'ok': True, 'serv': {'ok': True, 'items': AN_SERV}, 'ideas': {'ok': True, 'ideas': AN_IDEAS}, 'com': {'ok': True, 'items': AN_COM},
                 'res': {'items': [], 'resenas': [], 'global': {'estrellas': 41, 'resenas': 12, 'respondidas': 9, 'promedio': 4.3}}}
+    if accion == 'priv.cfgTodo':
+        return {'ok': True, 'esDev': False, 'esInvitado': False, 'cfg': CFG, 'usuarios': CF_USERS, 'plantillas': PLANTILLAS,
+                'casa': {}, 'emergencia': [], 'servicios': [], 'profesionales': [], 'zonas': [], 'huerfanas': [],
+                'call': {'usuarios': [{'id': 'cu1', 'nombre': 'Turno mañana', 'pin': '····', 'estado': 'ACTIVO', 'creado': '2026-10-02'}], 'dias': [], 'lideres': []}}
+    if accion == 'priv.cfgGuardar':
+        for k, v in (p.get('cambios') or {}).items(): CFG[k] = v
+        return {'ok': True}
+    if accion == 'priv.permCatalogo':
+        return {'ok': True, 'catalogo': PERM_CAT, 'candados': PERM_CAND}
+    if accion == 'priv.cfgUsuario':
+        import json as _j
+        per = p.get('permisos'); per = _j.loads(per) if isinstance(per, str) else (per or {'c': [], 'x': []})
+        u = next((x for x in CF_USERS if x['documento'] == str(p.get('docOriginal') or p.get('documento'))), None)
+        datos = {'documento': str(p.get('documento')), 'nombre': p.get('nombre', ''), 'correo': p.get('correo', ''), 'whatsapp': p.get('whatsapp', ''),
+                 'rol': p.get('rol', 'ADMIN'), 'estado': p.get('estado', 'ACTIVO'), 'permisos': per, 'foto': '', 'bienvenida': ''}
+        if u: u.update(datos)
+        else: CF_USERS.append(datos)
+        if p.get('pin'):
+            tap = set(per.get('x') or [])
+            claves = [k for k in per.get('c') or [] if _PFAM.get(k) not in tap]
+            USUARIOS[str(p['pin'])] = {'documento': datos['documento'], 'nombre': datos['nombre'], 'rol': datos['rol'], 'permisos': claves if datos['rol'] == 'INVITADO' else None}
+        return {'ok': True, 'usuarios': CF_USERS}
+    if accion == 'priv.cfgUsuarioBienvenida':
+        u = next(x for x in CF_USERS if x['documento'] == str(p.get('documento')))
+        u['bienvenida'] = dt.date.today().strftime('%d/%m/%Y')
+        pin = next((k for k, v in USUARIOS.items() if v['documento'] == u['documento']), '····')
+        txt = CFG['PLANTILLA_BIENVENIDA_PRIV'].replace('{nombre}', u['nombre'].split()[0]).replace('{clave}', pin).replace('{enlace}', CFG['APP_PRIVADA_URL'])
+        return {'ok': True, 'usuarios': CF_USERS, 'numero': '57' + u['whatsapp'], 'texto': txt, 'msg': 'Bienvenida enviada por el bot'}
     if accion in ('priv.lideres_x',):
         return {'ok': True, 'items': [], 'rv': {}}
     FALTAN.append(accion)
@@ -557,3 +588,49 @@ AN_IDEAS = [{'id': i, 'nombre': PERSONAS[i + 10]['nombre'], 'idea': 'Idea de eje
              'estado': ['PENDIENTE', 'LEIDA', 'A TENER EN CUENTA', 'ANOTADA'][i % 4], 'fecha': _fd(i % 6, 5 + i)} for i in range(22)]
 AN_COM = [{'id': i, 'nombre': n, 'categoria': c, 'visible': i != 5, 'estado': 'ACTIVO' if i != 5 else 'INACTIVO'} for i, (n, c) in enumerate(
     [('Panadería La Espiga', 'Comida'), ('Ferretería El Tornillo', 'Hogar'), ('Droguería Central', 'Salud'), ('Taller Moto Ya', 'Servicios'), ('Tienda Doña Rosa', 'Comida'), ('Papelería Estudio', 'Educación')])]
+
+
+CFG = {'APP_PUBLICA_URL': 'https://ejemplo.github.io/candidato-app/', 'APP_PRIVADA_URL': 'https://ejemplo.github.io/candidato-priv/', 'COMERCIO_URL': 'https://ejemplo.github.io/candidato-comercio/',
+       'APP_ASISTENCIA_URL': 'https://ejemplo.github.io/candidato-asistencias/', 'APP_VOTACION_URL': 'https://ejemplo.github.io/candidato-votacion/', 'APP_CENTER_URL': 'https://ejemplo.github.io/candidato-center/',
+       'PLANTILLA_COMPARTIR': '¡Hola! 👋 Te comparto la app *{nombreApp}* de la campaña:\n{enlaceApp}', 'MARCA_CANDIDATO_NOMBRE': 'Candidato Ejemplo', 'AGENDA_CANDIDATO_WA': '3005559999', 'AGENDA_MANEJO': 'Laura Gómez Ruiz',
+       'CORREO_REMITENTE': 'Equipo Candidato Ejemplo', 'CORREO_BANNER': '', 'ALERTA_BOT_EMAIL_1': 'equipo@ejemplo.com', 'ALERTA_BOT_EMAIL_2': '', 'ALERTA_BOT_EMAIL_3': '', 'ESCANER_CLAVE': '482915',
+       'INICIO_REEL_URL': '', 'INICIO_IMAGEN_DRIVE': '', 'PUB_VISTAS_APAGADAS': '',
+       'PLANTILLA_BIENVENIDA_PRIV': 'Hola {nombre} 👋\nYa tienes acceso al panel privado de la campaña.\n\nEntra aquí: {enlace}\nTu PIN es *{clave}*. No lo compartas con nadie.'}
+PLANTILLAS = [
+    {'titulo': 'Bienvenida al panel privado', 'modulo': 'Usuarios', 'clave': 'PLANTILLA_BIENVENIDA_PRIV', 'vars': ['{nombre}', '{enlace}', '{clave}'], 'cuerpo': CFG['PLANTILLA_BIENVENIDA_PRIV'], 'sintaxis': 'llaves'},
+    {'titulo': 'Compromiso al asignado', 'modulo': 'Compromisos', 'clave': 'PLANTILLA_COMPROMISO', 'vars': ['[ASIGNADO]', '[NOMBRE]', '[COMPROMISO]', '[CONTACTO]'],
+     'cuerpo': 'Hola [ASIGNADO] 👋 Te asignamos este compromiso con [NOMBRE]:\n\n[COMPROMISO]\n\nContacto: [CONTACTO]', 'sintaxis': 'corchetes'},
+    {'titulo': 'Resumen del día (Agenda)', 'modulo': 'Agenda', 'clave': 'PLANTILLA_AGENDA_RESUMEN', 'vars': ['{tiempo}', '{pn_candidato}', '{lista_reuniones}', '{u_agenda}'],
+     'cuerpo': '¡Hola, {tiempo}, {pn_candidato}! ☀️\nEsta es tu agenda de hoy:\n\n{lista_reuniones}\n\n{u_agenda}', 'sintaxis': 'llaves'}]
+CF_USERS = [
+    {'documento': '1000000001', 'nombre': 'Laura Gómez Ruiz', 'rol': 'ADMIN', 'estado': 'ACTIVO', 'correo': 'laura@ejemplo.com', 'whatsapp': '3005550101', 'foto': '/__assets/foto_laura.png', 'bienvenida': '02/10/2026'},
+    {'documento': '1000000002', 'nombre': 'Diego Martínez', 'rol': 'INVITADO', 'estado': 'ACTIVO', 'correo': '', 'whatsapp': '3005550102', 'foto': '', 'bienvenida': '15/10/2026', 'permisos': {'c': ['bd.ver', 'ag.ver'], 'x': []}},
+    {'documento': '1000000009', 'nombre': 'Soporte técnico', 'rol': 'DESARROLLADOR', 'estado': 'ACTIVO', 'correo': 'soporte@ejemplo.com', 'whatsapp': '', 'foto': '', 'esDev': True}]
+USUARIOS['1357']['permisos'] = ['bd.ver', 'ag.ver']
+PERM_CAND = [{'k': 'exportar', 'label': 'Sin exportar', 'desc': 'Apaga todas las descargas en Excel y PDF'}, {'k': 'eliminar', 'label': 'Sin eliminar', 'desc': 'Apaga todo lo que borra'},
+             {'k': 'wa', 'label': 'Sin WhatsApp', 'desc': 'Apaga los envíos por WhatsApp y por el bot'}, {'k': 'ia', 'label': 'Sin IA', 'desc': 'Apaga el robot de análisis'}]
+def _it(k, t, fam=None, madre=False):
+    d = {'k': k, 't': t}
+    if fam: d['fam'] = fam
+    if madre: d['madre'] = True
+    return d
+PERM_CAT = [
+    {'id': 'bd', 'label': 'Base de datos', 'items': [_it('bd.ver', 'Ver', madre=True), _it('bd.agregar', 'Agregar'), _it('bd.detalles', 'Detalles'), _it('bd.editar', 'Editar'), _it('bd.consultar', 'Consultar puesto'),
+        _it('bd.excel', 'Excel', 'exportar'), _it('bd.pdf', 'PDF', 'exportar'), _it('bd.eliminar', 'Eliminar', 'eliminar')],
+     'grupos': [{'id': 'dash', 'label': 'Dashboard', 'ruta': 'dashboard', 'items': [_it('dash.ver', 'Ver', madre=True), _it('dash.excel', 'Excel', 'exportar'), _it('dash.pdf', 'PDF', 'exportar')]},
+                {'id': 'sim', 'label': 'Simulador', 'ruta': 'simulador', 'items': [_it('sim.ver', 'Ver', madre=True), _it('sim.pdf', 'PDF', 'exportar')]},
+                {'id': 'voto', 'label': 'Votación', 'ruta': 'votacion', 'items': [_it('voto.ver', 'Ver', madre=True), _it('voto.excel', 'Excel', 'exportar'), _it('voto.pdf', 'PDF', 'exportar')]}]},
+    {'id': 'lid', 'label': 'Líderes', 'items': [_it('lid.ver', 'Ver', madre=True), _it('lid.agregar', 'Agregar'), _it('lid.ficha', 'Ficha'), _it('lid.editar', 'Editar'), _it('lid.wa', 'WhatsApp', 'wa'), _it('lid.exportar', 'Exportar', 'exportar')],
+     'grupos': [{'id': 'ref', 'label': 'Referidos', 'items': [_it('lid.ref.ver', 'Ver'), _it('lid.ref.excel', 'Excel', 'exportar')]}, {'id': 'mem', 'label': 'Memoria mensual', 'items': [_it('lid.mem.ver', 'Ver'), _it('lid.mem.pdf', 'PDF', 'exportar')]}]},
+    {'id': 'ag', 'label': 'Agenda', 'items': [_it('ag.ver', 'Ver', madre=True), _it('ag.crear', 'Crear'), _it('ag.editar', 'Editar'), _it('ag.estado', 'Estado'), _it('ag.wa', 'Avisar por WhatsApp', 'wa'), _it('ag.eliminar', 'Eliminar', 'eliminar')], 'grupos': []},
+    {'id': 'ev', 'label': 'Eventos', 'items': [_it('ev.ver', 'Ver', madre=True), _it('ev.crear', 'Crear'), _it('ev.editar', 'Editar'), _it('ev.estado', 'Estado'), _it('ev.eliminar', 'Eliminar', 'eliminar')], 'grupos': [{'id': 'asis', 'label': 'Asistentes', 'items': [_it('ev.asis.ver', 'Ver'), _it('ev.asis.excel', 'Excel', 'exportar')]}]},
+    {'id': 'cm', 'label': 'Compromisos', 'items': [_it('cm.ver', 'Ver', madre=True), _it('cm.crear', 'Crear'), _it('cm.editar', 'Editar'), _it('cm.estado', 'Estado'), _it('cm.traza', 'Bitácora'), _it('cm.wa', 'Enviar', 'wa'), _it('cm.eliminar', 'Eliminar', 'eliminar')], 'grupos': []},
+    {'id': 'fm', 'label': 'Formularios', 'items': [_it('fm.ver', 'Ver', madre=True), _it('fm.crear', 'Crear'), _it('fm.editar', 'Editar'), _it('fm.encender', 'Encender'), _it('fm.detalles', 'Detalles'), _it('fm.confirmar', 'Confirmar'), _it('fm.excel', 'Excel', 'exportar'), _it('fm.eliminar', 'Eliminar', 'eliminar')], 'grupos': []},
+    {'id': 'nt', 'label': 'Notificaciones', 'items': [_it('nt.ver', 'Ver', madre=True), _it('nt.crear', 'Crear'), _it('nt.editar', 'Editar'), _it('nt.eliminar', 'Eliminar', 'eliminar')], 'grupos': []},
+    {'id': 'an', 'label': 'Análisis de Procesos', 'items': [_it('an.ver', 'Ver', madre=True)], 'grupos': [{'id': 'serv', 'label': 'Servicios', 'items': [_it('an.serv.ver', 'Ver')]}, {'id': 'ideas', 'label': 'Ideas', 'items': [_it('an.ideas.ver', 'Ver')]}]},
+    {'id': 'ia', 'label': 'Robot de análisis', 'suelto': True, 'items': [_it('ia.usar', 'Usar el robot', 'ia')]}]
+_PFAM = {}
+for _v in PERM_CAT:
+    for _i in _v['items']: _PFAM[_i['k']] = _i.get('fam')
+    for _g in _v.get('grupos', []):
+        for _i in _g['items']: _PFAM[_i['k']] = _i.get('fam')

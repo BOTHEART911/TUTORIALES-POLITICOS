@@ -242,7 +242,7 @@
    "orden": 11,
    "tema": "Administración",
    "titulo": "Usuarios, invitados y configuración",
-   "descripcion": "Usuarios con PIN, pastillas del invitado y pestañas de Configuración.",
+   "descripcion": "Crea usuarios e invitados con permisos por vista y acción, envíales la bienvenida y ajusta la configuración de la campaña.",
    "rutas": [
     "config"
    ],
@@ -254,8 +254,8 @@
    ],
    "youtube": "",
    "short": "",
-   "shortImg": "",
-   "duracion": "",
+   "shortImg": "priv/img/P11v.jpg",
+   "duracion": "1:38",
    "activo": false
   },
   {

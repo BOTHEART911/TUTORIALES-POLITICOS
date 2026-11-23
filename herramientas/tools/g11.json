@@ -1,0 +1,17 @@
+{
+ "id": "T11",
+ "titulo": "Usuarios, invitados y configuración",
+ "sub": "Quién entra al panel, qué ve y cómo se ajusta la campaña",
+ "num": 11,
+ "siguiente": "Mi Bot de WhatsApp",
+ "escenas": [
+  {"id": "s1", "zoom": 1.2, "voz": "En Configuración están los ajustes de toda la campaña, ordenados por pestañas: general, casa social, emergencia, servicios, zonas, plantillas, usuarios y call center. Cada sección se abre y se cierra. En Enlaces de las apps, el botón Enviar abre WhatsApp con el mensaje listo para compartir esa app."},
+  {"id": "s2", "zoom": 1.3, "voz": "En Plantillas editas los mensajes que manda la app. Toca una variable para insertarla donde está el cursor y revisa con Vista previa cómo le llega a la persona."},
+  {"id": "s3", "zoom": 1.3, "voz": "En Usuarios ves quién entra al panel y con qué rol. Toca Agregar usuario, escribe el documento, el nombre y el WhatsApp. El rol Administrador ve todo; el Invitado solo lo que le marques. El PIN de cuatro dígitos es su llave y no se repite."},
+  {"id": "s4", "zoom": 1.3, "voz": "Para el invitado, marca las vistas a las que entra y, dentro de cada una, las acciones que puede hacer. Los candados de arriba apagan una familia entera, por ejemplo Sin exportar. Toca Guardar."},
+  {"id": "s5", "zoom": 1.3, "voz": "Con el botón de WhatsApp de su tarjeta le envías la bienvenida, con el enlace del panel y su PIN, directo o por el bot."},
+  {"id": "s6", "zoom": 1.15, "voz": "Cuando el invitado entra con su PIN, su inicio muestra solo las vistas que le diste, y dentro de ellas solo los botones permitidos."},
+  {"id": "s7", "zoom": 1.0, "voz": "Así cada persona del equipo trabaja con lo que necesita, y la configuración de la campaña queda en un solo lugar."}
+ ],
+ "mini": {"texto": "Tu equipo, tus reglas", "linea2": "Usuarios e invitados", "escena_h": "s4", "q_h": 0.3, "recorte_h": [0.05, 0.05, 0.95, 0.95], "escena_v": "s4", "q_v": 0.3}
+}
