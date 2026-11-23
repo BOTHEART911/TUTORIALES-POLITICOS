@@ -392,6 +392,16 @@ def responder(accion, params, cuerpo):
         n = {'id': str(900 + len(NOTIS)), 'titulo': p.get('titulo', ''), 'cuerpo': p.get('cuerpo', ''), 'enlace': p.get('enlace', ''), 'estado': 'PUBLICADA' if p.get('enviar') else 'BORRADOR',
              'fecha': dt.datetime.now().strftime('%d/%m/%Y %H:%M'), 'ts': int(dt.datetime.now().timestamp() * 1000), 'enviados': 1238 if p.get('enviar') else 0, 'fallidos': 2 if p.get('enviar') else 0}
         NOTIS.insert(0, n); return {'ok': True, 'card': n, 'push': {'enviados': 1238} if p.get('enviar') else None}
+    if accion == 'priv.simulador':
+        return {'ok': True, 'eleccion': _elec(dias=158), 'totales': SIM_TOT, 'puestos': SIM_PUESTOS}
+    if accion in ('priv.simuladorPdf', 'voto.informePdf'):
+        import base64 as _b
+        return {'ok': True, 'base64': _b.b64encode(open('/home/claude/tut/assets/balance_ejemplo.pdf', 'rb').read()).decode(), 'mime': 'application/pdf', 'filename': 'informe_ejemplo.pdf'}
+    if accion == 'voto.contadores':
+        return {'ok': True, 'eleccion': _elec(curso=True), 'tally': _tally()}
+    if accion == 'priv.analisis':
+        return {'ok': True, 'serv': {'ok': True, 'items': AN_SERV}, 'ideas': {'ok': True, 'ideas': AN_IDEAS}, 'com': {'ok': True, 'items': AN_COM},
+                'res': {'items': [], 'resenas': [], 'global': {'estrellas': 41, 'resenas': 12, 'respondidas': 9, 'promedio': 4.3}}}
     if accion in ('priv.lideres_x',):
         return {'ok': True, 'items': [], 'rv': {}}
     FALTAN.append(accion)
@@ -500,3 +510,50 @@ NOTIS = [
      'fecha': (dt.datetime.now() - dt.timedelta(days=1)).strftime('%d/%m/%Y %H:%M'), 'ts': int((dt.datetime.now() - dt.timedelta(days=1)).timestamp() * 1000), 'enviados': 0},
     {'id': '803', 'titulo': 'Nuevo punto de inscripción', 'cuerpo': 'Ya puedes inscribirte en la sede del barrio San José.', 'enlace': 'https://instagram.com/ejemplo', 'estado': 'PUBLICADA',
      'fecha': (dt.datetime.now() - dt.timedelta(days=6)).strftime('%d/%m/%Y %H:%M'), 'ts': int((dt.datetime.now() - dt.timedelta(days=6)).timestamp() * 1000), 'enviados': 1102, 'fallidos': 0}]
+
+
+import time as _t
+def _elec(dias=0, curso=False):
+    now = int(_t.time() * 1000)
+    if curso:
+        ini, fin = now - 3 * 3600000 - 1260000, now + 4 * 3600000 + 2280000
+    else:
+        ini = now + dias * 86400000 + 5 * 3600000; fin = ini + 8 * 3600000
+    return {'configurada': True, 'iniMs': ini, 'finMs': fin, 'now': now, 'fecha': '', 'horaInicio': '08:00', 'horaFin': '16:00'}
+_PUESTOS = [('IE San José', 1420, 8), ('Colegio Villa Ejemplo', 1180, 7), ('Coliseo Municipal', 960, 6), ('IE El Prado', 740, 5), ('Escuela Las Palmas', 510, 4), ('Puesto Vereda El Llano', 230, 2)]
+SIM_TOT = {'registros': sum(p[1] for p in _PUESTOS), 'puestos': len(_PUESTOS), 'mesas': sum(p[2] for p in _PUESTOS)}
+def _mesas(n, k):
+    pesos = [k - i + 2 for i in range(k)]; t = sum(pesos); out = []; acc = 0
+    for i, w in enumerate(pesos):
+        r = round(n * w / t) if i < k - 1 else n - acc; acc += r
+        out.append({'mesa': str(i + 1), 'registros': r, 'pct': round(r * 100 / n, 1)})
+    return out
+SIM_PUESTOS = [{'puesto': p, 'registros': n, 'pct': round(n * 100 / SIM_TOT['registros'], 1), 'mesas': _mesas(n, k)} for p, n, k in _PUESTOS]
+_T0 = [None]
+def _tally():
+    if _T0[0] is None: _T0[0] = _t.time()
+    paso = int((_t.time() - _T0[0]) / 3)
+    vp = [(p, n, int(n * 0.41) + paso * (7 - i)) for i, (p, n, k) in enumerate(_PUESTOS)]
+    tot = sum(x[2] for x in vp); base = SIM_TOT['registros']
+    por_p = [{'label': p, 'n': v, 'base': n, 'pct': round(v * 100 / n, 1)} for p, n, v in vp]
+    por_m = []
+    for p, n, k in _PUESTOS[:3]:
+        for m in _mesas(n, 3):
+            v = int(m['registros'] * 0.43) + paso
+            por_m.append({'label': p + ' · Mesa ' + m['mesa'], 'n': v, 'base': m['registros'], 'pct': round(v * 100 / max(1, m['registros']), 1)})
+    por_l = [{'label': l['nombre'], 'n': int(r * 0.6) + paso, 'base': r, 'pct': round((int(r * 0.6) + paso) * 100 / max(1, r), 1)} for l, r in zip(LIDERES_FULL, [64, 52, 38, 27, 19, 12, 9, 7])]
+    return {'total': tot, 'base': base, 'pct': round(tot * 100 / base, 1), 'porPuesto': sorted(por_p, key=lambda x: -x['n']), 'porMesa': sorted(por_m, key=lambda x: -x['n']), 'porLider': por_l}
+_SV = ['Brigada de salud', 'Asesoría jurídica', 'Mejoramiento de vivienda', 'Empleo', 'Educación']
+_PR = ['Dra. Paula Méndez', 'Abg. Andrés Lozano', 'Ing. Camilo Rueda', '']
+def _fd(m, d):
+    x = dt.date.today().replace(day=1)
+    for _ in range(m):
+        x = (x - dt.timedelta(days=1)).replace(day=1)
+    return '%02d/%02d/%d' % (min(d, 28), x.month, x.year)
+_EST = ['ATENDIDA', 'ATENDIDA', 'SEGUIMIENTO', 'PENDIENTE', 'INGRESADA', 'ATENDIDA', 'RECURRENTE']
+AN_SERV = [{'id': i, 'documento': PERSONAS[i]['documento'], 'nombre': PERSONAS[i]['nombre'], 'residencia': PERSONAS[i]['residencia'], 'servicio': _SV[i % 5],
+            'responsable': _PR[i % 4] if i % 9 else '', 'estado': _EST[i % 7], 'medio': ['App', 'WhatsApp', 'Presencial'][i % 3], 'fecha': _fd(i % 6, 3 + i)} for i in range(46)]
+AN_IDEAS = [{'id': i, 'nombre': PERSONAS[i + 10]['nombre'], 'idea': 'Idea de ejemplo ' + str(i), 'categoria': ['Vías', 'Deporte', 'Cultura', 'Seguridad'][i % 4],
+             'estado': ['PENDIENTE', 'LEIDA', 'A TENER EN CUENTA', 'ANOTADA'][i % 4], 'fecha': _fd(i % 6, 5 + i)} for i in range(22)]
+AN_COM = [{'id': i, 'nombre': n, 'categoria': c, 'visible': i != 5, 'estado': 'ACTIVO' if i != 5 else 'INACTIVO'} for i, (n, c) in enumerate(
+    [('Panadería La Espiga', 'Comida'), ('Ferretería El Tornillo', 'Hogar'), ('Droguería Central', 'Salud'), ('Taller Moto Ya', 'Servicios'), ('Tienda Doña Rosa', 'Comida'), ('Papelería Estudio', 'Educación')])]

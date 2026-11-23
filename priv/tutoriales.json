@@ -218,7 +218,7 @@
    "orden": 10,
    "tema": "Análisis",
    "titulo": "Mide la campaña",
-   "descripcion": "Dashboard, Simulador, Votación en vivo y Análisis de procesos.",
+   "descripcion": "Lee el Dashboard por zona y puesto, usa el Simulador, sigue la Votación en vivo y revisa el Análisis de procesos.",
    "rutas": [
     "dashboard",
     "simulador",
@@ -233,8 +233,8 @@
    ],
    "youtube": "",
    "short": "",
-   "shortImg": "",
-   "duracion": "",
+   "shortImg": "priv/img/P10v.jpg",
+   "duracion": "1:41",
    "activo": false
   },
   {

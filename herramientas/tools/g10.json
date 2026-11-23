@@ -1,0 +1,17 @@
+{
+ "id": "T10",
+ "titulo": "Mide la campaña",
+ "sub": "Dashboard, Simulador, Votación y Análisis de procesos",
+ "num": 10,
+ "siguiente": "Usuarios, invitados y configuración",
+ "escenas": [
+  {"id": "s1", "zoom": 1.2, "voz": "Desde Base de datos entras al Dashboard. Arriba ves cuántos registros hay, cuántos votan en el municipio y en cuántas zonas están. Las barras muestran los registros por zona de residencia: en verde los que votan aquí y en rojo los de otro municipio."},
+  {"id": "s2", "zoom": 1.25, "voz": "Cambia a Por puesto para verlo por puesto de votación, y filtra por intención de voto, por ejemplo Firme con el voto. Todo lo que ves se descarga en Excel o en PDF."},
+  {"id": "s3", "zoom": 1.25, "voz": "El Simulador muestra la cuenta regresiva a las elecciones y los votos que se obtendrían si votara todo el que está registrado aquí. Cada puesto dice sus registros y su peso sobre el total; con Ver mesas lo abres mesa por mesa. Abajo generas el informe en PDF."},
+  {"id": "s4", "zoom": 1.25, "voz": "El día de la elección, Votación muestra en vivo los votos que llegan desde la app de escaneo, con el tiempo que falta para el cierre y la conversión frente a los registros. Míralo por puesto, por mesa o por líder."},
+  {"id": "s5", "zoom": 1.2, "voz": "Análisis de procesos reúne lo que llega de la app pública: servicios, ideas y comercio. El resumen trae la actividad de los últimos meses y los puntos de atención, lo que necesita una acción."},
+  {"id": "s6", "zoom": 1.25, "voz": "Toca un punto de atención y te lleva al detalle ya filtrado, por ejemplo las solicitudes sin profesional asignado. Ahí ves la distribución por servicio o por profesional, con sus estados."},
+  {"id": "s7", "zoom": 1.0, "voz": "Con estas cuatro vistas sabes dónde está tu fuerza, cuántos votos puedes esperar y qué le falta atender a la campaña."}
+ ],
+ "mini": {"texto": "Mide tu campaña", "linea2": "Dashboard y Votación", "escena_h": "s3", "q_h": 0.55, "recorte_h": [0.05, 0.05, 0.95, 0.95], "escena_v": "s4", "q_v": 0.3}
+}
