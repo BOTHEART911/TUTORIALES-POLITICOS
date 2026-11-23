@@ -1,0 +1,68 @@
+{
+ "id": "T05",
+ "titulo": "Registra y administra líderes",
+ "sub": "Tarjetas, ficha, registro, tablero, memoria y traspaso",
+ "num": 5,
+ "siguiente": "Referidos, mensajes y bitácoras",
+ "escenas": [
+  {
+   "id": "s1",
+   "zoom": 1.15,
+   "voz": "En Líderes está tu equipo. El color de cada tarjeta dice cuántos referidos tiene: rojo, menos de diez; azul, de diez a cuarenta y nueve; verde, cincuenta o más. La barra muestra qué porcentaje de sus referidos ya tiene intención de voto registrada."
+  },
+  {
+   "id": "s2",
+   "zoom": 1.3,
+   "voz": "Busca por código, nombre, documento, barrio o padrino. Las pastillas filtran por clasificación: principal, sugerido por líder, familiar o procesos internos."
+  },
+  {
+   "id": "s3",
+   "zoom": 1.2,
+   "voz": "Toca Ver para abrir la ficha del líder: sus referidos, cuántos están firmes, cuántos ya trabajó y cuántos le faltan por fidelizar. Cada cifra se puede tocar para ver esas personas."
+  },
+  {
+   "id": "s4",
+   "zoom": 1.4,
+   "voz": "Para registrar un líder, toca Agregar. La app sugiere el siguiente código. Escribe el documento y toca Buscar: si ya está en la base, trae sus datos; si no, se crea también allí. Elige su padrino y su clasificación, y toca Guardar líder. Su contraseña para la app pública será su documento."
+  },
+  {
+   "id": "s5",
+   "zoom": 1.4,
+   "voz": "Para cambiar sus datos, toca el lápiz. Por ejemplo, cambia su clasificación y toca Guardar cambios."
+  },
+  {
+   "id": "s6",
+   "zoom": 1.15,
+   "voz": "El Tablero muestra el crecimiento de todo el equipo mes a mes y el ranking del mes con el puntaje de gestión de cada líder: excelente, bueno, regular o bajo. Toca un líder para ver su detalle."
+  },
+  {
+   "id": "s7",
+   "zoom": 1.3,
+   "voz": "El primer día de cada mes, la app guarda el balance de todos los líderes. En Memoria mensual eliges el mes, ves la tabla completa y la descargas en PDF o Excel."
+  },
+  {
+   "id": "s8",
+   "zoom": 1.35,
+   "voz": "Si un líder sale de la campaña, toca la caneca. Eliges a qué líder pasan sus referidos, escribes la clave de eliminación y confirmas. Sus bitácoras se conservan y nadie queda sin líder."
+  },
+  {
+   "id": "s9",
+   "zoom": 1.0,
+   "voz": "Así tienes a tu equipo de líderes organizado, medido y al día."
+  }
+ ],
+ "mini": {
+  "texto": "Tu equipo, medido",
+  "linea2": "Líderes, tablero y memoria",
+  "escena_h": "s1",
+  "q_h": 0.12,
+  "recorte_h": [
+   0.0,
+   0.08,
+   0.75,
+   0.98
+  ],
+  "escena_v": "s1",
+  "q_v": 0.12
+ }
+}

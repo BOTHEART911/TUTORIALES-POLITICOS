@@ -62,9 +62,27 @@ for k, (nom, doc) in enumerate([('Alberto Gómez Silva', '1000007001'), ('Inés 
     PERSONAS.append({'documento': doc, 'nombre': nom, 'residencia': 'Centro', 'municipio': 'POR CONFIRMAR', 'intencion': '', 'estado': 'INACTIVO',
         'fechaRegistro': _fecha(HOY - dt.timedelta(days=90 + k)), 'fechaActualizacion': _fecha(HOY - dt.timedelta(days=2)), 'esLider': False, 'foto': '',
         'puestoCrudo': '', 'mesa': '', 'motivo': 'FALLECIDO · CONFIRMADO POR EL LÍDER', 'telefono': '', 'referencia': '2'})
-LIDERES = [{'codigo': str(k + 1), 'nombre': n} for k, n in enumerate(['Ana Rojas Peña', 'Jorge Castro León', 'Paola Vargas Cruz', 'Felipe Ortiz Ríos', 'Camila Peña Torres', 'Rosa León Duarte'])]
+LIDERES = [{'codigo': str(k + 1), 'nombre': n} for k, n in enumerate(['Ana Rojas Peña', 'Jorge Castro León', 'Paola Vargas Cruz', 'Felipe Ortiz Ríos', 'Camila Peña Torres', 'Rosa León Duarte',
+    'Mario Silva Cano', 'Luz Marina Arias', 'Germán Duarte Ruiz', 'Yaneth Cruz Mejía', 'Óscar Iván Pardo', 'Sofía Herrera León'])]
+_REF = [64, 52, 38, 27, 19, 12, 9, 7, 5, 3, 2, 0]
+_CLA = ['PRINCIPAL', 'PRINCIPAL', 'PRINCIPAL', 'SUGERIDO POR LIDER', 'PRINCIPAL', 'FAMILIAR', 'SUGERIDO POR LIDER', 'PROCESOS INTERNOS', 'FAMILIAR', 'SUGERIDO POR LIDER', 'PRINCIPAL', 'SUGERIDO POR LIDER']
+_PAD = ['', '', '', 'Ana Rojas Peña', '', 'Jorge Castro León', 'Ana Rojas Peña', '', 'Paola Vargas Cruz', 'Jorge Castro León', '', 'Ana Rojas Peña']
+def _lider(k, l):
+    ref = _REF[k]; firme = round(ref * .45); nov = round(ref * .08); dud = round(ref * .1); nos = round(ref * .05); noc = round(ref * .07)
+    trab = firme + nov + dud + nos + noc; pct = round(trab * 100 / ref) if ref else 0
+    des = [{'label': a, 'n': b, 'pct': round(b * 100 / ref) if ref else 0} for a, b in (('Firme con el voto', firme), ('No vota con nosotros', nov), ('No está seguro(a)', dud), ('No sabe votar', nos), ('No contactado', noc))]
+    return dict(l, documento=str(1000003000 + k * 17), contacto='57300555' + str(1200 + k), residencia=BARRIOS[k % len(BARRIOS)], padrino=_PAD[k], referidos=ref,
+                trabajadas=trab, pctTrabajo=pct, desglose=des, noFidelizados=ref - trab, pctNoFidelizados=(100 - pct) if ref else 0,
+                clasificacion=_CLA[k], activado=k < 8, correo='', foto='', telLocal='300555' + str(1200 + k))
+LIDERES_FULL = [_lider(k, l) for k, l in enumerate(LIDERES)]
+import os as _os
+if _os.environ.get('LIDERES_EN_BD', '1') == '1':
+    for _l in LIDERES_FULL:
+        PERSONAS.append({'documento': _l['documento'], 'nombre': _l['nombre'], 'residencia': _l['residencia'], 'municipio': 'Villa Ejemplo', 'intencion': 'Firme con el voto', 'estado': 'ACTIVO',
+            'fechaRegistro': _fecha(HOY - dt.timedelta(days=150)), 'fechaActualizacion': '', 'esLider': True, 'foto': '', 'puestoCrudo': 'IE CENTRAL', 'mesa': '3', 'motivo': '', 'telefono': _l['telLocal'], 'referencia': '1'})
 EXISTE = {'1000000951': 'Jorge Peña Herrera'}
 for x in PERSONAS: EXISTE[x['documento']] = x['nombre']
+
 
 
 def _agenda():
@@ -173,6 +191,9 @@ def responder(accion, params, cuerpo):
                  'referencia': lid['codigo'], 'telefono': f.get('t', '')}
             PERSONAS.append(c); cards.append(c); res.append({'d': f['d'], 'ok': True})
         return {'ok': True, 'res': res, 'subidos': len(res), 'cards': cards, 'lider': lid}
+    if accion in ('priv.balancePdf',):
+        import base64
+        return {'ok': True, 'base64': base64.b64encode(open('/home/claude/tut/assets/balance_ejemplo.pdf', 'rb').read()).decode(), 'mime': 'application/pdf', 'filename': 'BALANCE_OCTUBRE_2026.pdf'}
     if accion in ('priv.bdPdf', 'priv.bdExcel'):
         import base64
         return {'ok': True, 'base64': base64.b64encode(open('/home/claude/tut/assets/bd_ejemplo.pdf', 'rb').read()).decode(), 'mime': 'application/pdf', 'filename': 'BASE_DE_DATOS_VILLA_EJEMPLO.pdf'}
@@ -186,7 +207,57 @@ def responder(accion, params, cuerpo):
         return {'ok': True, 'configurada': False}
     if accion == 'priv.iaAnalizar':
         return {'ok': True, 'modelo': 'Análisis', 'generado': 'hace un momento', 'texto': IA_TEXTO.get(p.get('vista'), IA_TEXTO['bd'])}
-    if accion in ('priv.lideres', 'priv.compromisos', 'priv.solicitudes'):
+    if accion == 'priv.lideres':
+        return {'ok': True, 'items': LIDERES_FULL, 'columnas': [], 'rv': {}, 'plantillas': None}
+    if accion == 'priv.liderNuevoMeta':
+        return {'ok': True, 'lideres': [{'codigo': l['codigo'], 'nombre': l['nombre']} for l in LIDERES_FULL], 'sugerido': str(len(LIDERES_FULL) + 1)}
+    if accion == 'priv.liderBuscarDoc':
+        d = str(p.get('documento', '')); l = next((x for x in LIDERES_FULL if x['documento'] == d), None)
+        if l: return {'ok': True, 'yaLider': True, 'codigo': l['codigo'], 'nombre': l['nombre']}
+        c = _fila(d)
+        if c: return {'ok': True, 'enPrincipal': True, 'nombre': c['nombre'], 'contacto': c.get('telefono', ''), 'residencia': c['residencia']}
+        return {'ok': True, 'enPrincipal': False}
+    if accion in ('priv.liderAgregar', 'priv.liderEditar'):
+        cod = str(p.get('codigo')); l = next((x for x in LIDERES_FULL if x['codigo'] == cod or x['documento'] == str(p.get('documento'))), None)
+        if not l:
+            l = _lider(11, {'codigo': cod, 'nombre': p.get('nombre', '')}); l.update(referidos=0, trabajadas=0, pctTrabajo=0, desglose=[], noFidelizados=0, activado=False)
+            LIDERES_FULL.append(l)
+        l.update({k: v for k, v in (('nombre', p.get('nombre')), ('documento', p.get('documento')), ('residencia', p.get('residencia')), ('padrino', p.get('padrino')), ('clasificacion', p.get('clasificacion')), ('contacto', '57' + str(p.get('contacto', '')) if p.get('contacto') else None)) if v})
+        return {'ok': True, 'card': l, 'desactivados': []}
+    if accion == 'priv.liderVer':
+        l = next((x for x in LIDERES_FULL if x['codigo'] == str(p.get('codigo'))), None)
+        return {'ok': True, 'lider': dict(l, enPrincipal=True, municipio='Villa Ejemplo', puesto='IE CENTRAL', mesa='3')}
+    if accion == 'priv.liderEliminarPrevia':
+        l = next((x for x in LIDERES_FULL if x['codigo'] == str(p.get('codigo'))), None)
+        return {'ok': True, 'referidos': l['referidos'], 'activos': l['referidos'], 'ahijados': 0, 'delegados': 0, 'bitacoras': 3, 'compromisos': 1, 'compromisosAbiertos': 0, 'solicitudes': 0, 'solicitudesAbiertas': 0, 'inactivos': [], 'hayClave': True}
+    if accion == 'priv.liderEliminar':
+        o = next((x for x in LIDERES_FULL if x['codigo'] == str(p.get('codigo'))), None); d = next((x for x in LIDERES_FULL if x['codigo'] == str(p.get('destino'))), None)
+        LIDERES_FULL.remove(o); d['referidos'] += o['referidos']
+        return {'ok': True, 'movidos': o['referidos'], 'activosMovidos': o['referidos'], 'origen': {'codigo': o['codigo'], 'documento': o['documento']}, 'destino': {'codigo': d['codigo'], 'nombre': d['nombre']}, 'docs': [], 'compromisosAbiertos': 0, 'solicitudesAbiertas': 0}
+    if accion == 'priv.balances':
+        meses = []
+        for k, (m, t) in enumerate((('2026-10', 'Octubre 2026'), ('2026-09', 'Septiembre 2026'), ('2026-08', 'Agosto 2026'))):
+            meses.append({'mes': m, 'mesTxt': t, 'pct': [61, 54, 47][k], 'lideres': 11, 'ref': [210, 176, 140][k], 'fechaCierre': '01/' + ['11', '10', '09'][k] + '/2026'})
+        return {'ok': True, 'meses': meses}
+    if accion == 'priv.balanceVer':
+        items = []
+        for l in LIDERES_FULL[:11]:
+            r = max(0, round(l['referidos'] * .85)); f = round(r * .4)
+            items.append({'codigo': l['codigo'], 'lider': l['nombre'], 'ref': r, 'firme': f, 'noVota': round(r * .07), 'noSeguro': round(r * .09), 'noSabe': round(r * .04), 'noContactado': round(r * .05), 'noFid': r - f - round(r * .25), 'pct': round((f + round(r * .25)) * 100 / r) if r else 0})
+        return {'ok': True, 'items': items, 'mesTxt': 'Octubre 2026', 'total': len(items)}
+    if accion == 'priv.lideresTablero':
+        M = ['2026-06', '2026-07', '2026-08', '2026-09', '2026-10', '2026-11']; lid = {}; bal = {}
+        for k, l in enumerate(LIDERES_FULL):
+            ref = l['referidos']; parts = [0.08, 0.12, 0.18, 0.22, 0.24, 0.16]
+            n = [round(ref * x) for x in parts]
+            t = [ref, round(ref * .45), round(ref * .08), round(ref * .1), round(ref * .05), round(ref * .07), 0]
+            lid[l['codigo']] = {'nom': l['nombre'], 'foto': '', 'cl': l['clasificacion'], 'on': l['activado'], 'n': n, 'al': [round(x * .3) for x in n], 'ae': [round(x * .2) for x in n], 'sf': 0, 't': t, 'st': [ref, 0, 0, 0], 'as': 0, 'inac': 0}
+            bal[l['codigo']] = {}
+            for j, m in enumerate(M[:-1]):
+                r = sum(n[:j + 1]); f = round(r * (.25 + j * .04)); trab = round(r * (.4 + j * .06))
+                bal[l['codigo']][m] = [r, f, round(r * .05), round(r * .05), round(r * .02), max(0, trab - f - round(r * .12)), r - trab, trab]
+        return {'ok': True, 'meses': M, 'hoy': M[-1], 'lid': lid, 'bal': bal, 'val': {}, 'bit': {}, 'generado': 'hace un momento', 'rv': {}}
+    if accion in ('priv.compromisos', 'priv.solicitudes'):
         return {'ok': True, 'items': [], 'rv': {}}
     FALTAN.append(accion)
     return {'ok': True, 'items': []}
