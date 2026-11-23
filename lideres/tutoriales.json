@@ -1,0 +1,158 @@
+{
+ "version": 2,
+ "actualizado": "2026-11-23",
+ "app": "LIDERES",
+ "temas": [
+  "Zona de líderes"
+ ],
+ "tutoriales": [
+  {
+   "id": "L01",
+   "orden": 1,
+   "tema": "Zona de líderes",
+   "titulo": "Mis referidos: tu grupo, al día",
+   "descripcion": "Fidelización del mes, filtros, historia de cada persona, llamar y marcar, asistencia, ceder, agregar y validar.",
+   "rutas": [
+    "l-referidos"
+   ],
+   "palabras": [
+    "referidos",
+    "llamar",
+    "intencion",
+    "asistencia",
+    "ceder",
+    "nuevo referido",
+    "validar",
+    "fidelizacion",
+    "trazabilidad"
+   ],
+   "youtube": "https://youtu.be/xcYWphKOWh0",
+   "short": "https://youtube.com/shorts/i9lJXf0ezcg",
+   "shortImg": "lideres/img/L01v.jpg",
+   "duracion": "2:35",
+   "activo": true,
+   "capitulos": [
+    [
+     "0:00",
+     "Introducción"
+    ],
+    [
+     "0:03",
+     "Lo importante es estar en contacto"
+    ],
+    [
+     "0:14",
+     "Fidelización del mes y crecimiento"
+    ],
+    [
+     "0:28",
+     "Filtros por municipio y por actividad"
+    ],
+    [
+     "0:39",
+     "La historia de cada persona (i)"
+    ],
+    [
+     "0:51",
+     "Llama y marca la intención"
+    ],
+    [
+     "1:05",
+     "Confirma la asistencia a un evento"
+    ],
+    [
+     "1:15",
+     "Cuatro llamadas al día y el buscador"
+    ],
+    [
+     "1:27",
+     "Ceder: el botón del trabajo en equipo"
+    ],
+    [
+     "1:42",
+     "Nuevo referido que ya es de otro líder"
+    ],
+    [
+     "1:56",
+     "Registrar a una persona nueva"
+    ],
+    [
+     "2:09",
+     "Validar los documentos por confirmar"
+    ],
+    [
+     "2:21",
+     "Cierre"
+    ]
+   ]
+  },
+  {
+   "id": "L02",
+   "orden": 2,
+   "tema": "Zona de líderes",
+   "titulo": "Trabaja sin señal",
+   "descripcion": "Prepararse, anotar sin conexión, Pendientes por subir, pegar varios, revisar y subir.",
+   "rutas": [
+    "l-pendientes",
+    "l-preparar"
+   ],
+   "palabras": [
+    "sin señal",
+    "sin conexion",
+    "pendientes",
+    "pegar",
+    "subir",
+    "preparar",
+    "offline"
+   ],
+   "youtube": "",
+   "short": "",
+   "shortImg": "lideres/img/L02v.jpg",
+   "duracion": "1:45",
+   "activo": false,
+   "capitulos": [
+    [
+     "0:00",
+     "Introducción"
+    ],
+    [
+     "0:03",
+     "Sin señal también se trabaja"
+    ],
+    [
+     "0:12",
+     "Prepárate antes de salir"
+    ],
+    [
+     "0:21",
+     "Qué cambia sin conexión"
+    ],
+    [
+     "0:30",
+     "Anota referidos sin señal"
+    ],
+    [
+     "0:51",
+     "Volvió la señal: Pendientes por subir"
+    ],
+    [
+     "0:59",
+     "Pegar varios desde WhatsApp o notas"
+    ],
+    [
+     "1:11",
+     "Revisar, descartar y corregir"
+    ],
+    [
+     "1:23",
+     "Subir a tu grupo"
+    ],
+    [
+     "1:32",
+     "Cierre"
+    ]
+   ]
+  }
+ ],
+ "campanas": {}
+}

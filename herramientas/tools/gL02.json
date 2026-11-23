@@ -1,0 +1,70 @@
+{
+ "id": "L02",
+ "titulo": "Trabaja sin señal",
+ "sub": "Prepárate, anota sin conexión y sube después",
+ "num": 2,
+ "siguiente": "",
+ "zona": "ZONA DE LÍDERES",
+ "barra": "Zona de líderes · app de la campaña",
+ "escenas": [
+  {
+   "id": "s1",
+   "zoom": 1.0,
+   "voz": "En el barrio o en la vereda no siempre hay señal. La app te deja seguir trabajando sin conexión, si te preparas antes de salir."
+  },
+  {
+   "id": "s2",
+   "zoom": 1.3,
+   "voz": "Con señal, toca Prepararme para salir sin señal. Tu lista de referidos y los barrios quedan guardados en el teléfono."
+  },
+  {
+   "id": "s3",
+   "zoom": 1.3,
+   "voz": "Sin señal, arriba aparece el aviso. Lo que necesita internet se ve apagado, pero Mis referidos abre con tu lista guardada."
+  },
+  {
+   "id": "s4",
+   "zoom": 1.35,
+   "voz": "Toca Nuevo referido y anota documento, nombre, WhatsApp y barrio. Cada registro queda en Pendientes por subir, y puedes anotar varios seguidos. Si el documento ya está en tu lista, la app te avisa. Al terminar, vuelve al panel: ahí ves cuántos tienes pendientes."
+  },
+  {
+   "id": "s5",
+   "zoom": 1.3,
+   "voz": "Cuando vuelva la señal, la app te avisa. Entra a Pendientes por subir: ahí está todo lo que anotaste."
+  },
+  {
+   "id": "s6",
+   "zoom": 1.35,
+   "voz": "Si anotaste en WhatsApp o en una libreta, toca Pegar varios y pega los datos, una persona por línea. La app te muestra cómo los leyó antes de agregarlos."
+  },
+  {
+   "id": "s7",
+   "zoom": 1.35,
+   "voz": "La app revisa cada documento. Si alguien ya es de otro líder, te dice de quién y lo descartas. Si falta un dato, como el WhatsApp o el barrio, lo corriges ahí mismo."
+  },
+  {
+   "id": "s8",
+   "zoom": 1.3,
+   "voz": "Cuando todo esté listo, toca Subir. Tus nuevos referidos quedan en tu grupo, como si los hubieras registrado con señal."
+  },
+  {
+   "id": "s9",
+   "zoom": 1.0,
+   "voz": "Así no pierdes ningún contacto, haya o no haya señal. Con esto ya conoces la zona de líderes."
+  }
+ ],
+ "mini": {
+  "texto": "Sin señal, sin excusas",
+  "linea2": "Trabaja sin conexión",
+  "escena_h": "s7",
+  "q_h": 0.5,
+  "recorte_h": [
+   0.0,
+   0.0,
+   1.0,
+   1.0
+  ],
+  "escena_v": "s4",
+  "q_v": 0.6
+ }
+}

@@ -10,7 +10,7 @@ TAPAR = r"""(() => {
   const RX = /(^|[^\d])(3\d{2})[ ]?(\d{3})[ ]?(\d{4})(?!\d)/g;
   const tapar = n => { if (n.nodeValue && RX.test(n.nodeValue)) { RX.lastIndex = 0; n.nodeValue = n.nodeValue.replace(RX, '$1$2 ••• ••••'); } RX.lastIndex = 0; };
   const recorrer = r => { const w = document.createTreeWalker(r, NodeFilter.SHOW_TEXT); let n; while ((n = w.nextNode())) tapar(n); };
-  const st = document.createElement('style'); st.textContent = 'input[inputmode=numeric][maxlength="10"]:not(#nr-doc):not(#lrv-doc):not([id$="-doc"]){-webkit-text-security:disc}';
+  const st = document.createElement('style'); st.textContent = 'input[inputmode=numeric][maxlength="10"]:not(#nr-doc):not(#lrv-doc):not([id$="-doc"]):not([data-f="d"]){-webkit-text-security:disc}';
   const on = () => { document.head.appendChild(st); recorrer(document.body);
     new MutationObserver(ms => ms.forEach(m => { if (m.type === 'characterData') tapar(m.target); m.addedNodes.forEach(x => x.nodeType === 3 ? tapar(x) : x.nodeType === 1 && recorrer(x)); }))
       .observe(document.body, { childList: true, subtree: true, characterData: true }); };
