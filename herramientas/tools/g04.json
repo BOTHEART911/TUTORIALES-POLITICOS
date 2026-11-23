@@ -1,0 +1,73 @@
+{
+ "id": "T04",
+ "titulo": "En bloque y sin señal",
+ "sub": "Carga masiva, reasignar, pendientes y exportar",
+ "num": 4,
+ "siguiente": "Registra y administra líderes",
+ "escenas": [
+  {
+   "id": "s1",
+   "zoom": 1.0,
+   "voz": "Cuando tienes muchos registros, no los arregles uno por uno: Base de datos te deja trabajar en bloque, y también sin señal."
+  },
+  {
+   "id": "s2",
+   "zoom": 1.35,
+   "voz": "Para cargar el puesto de votación de muchas personas, toca Subir y descarga la plantilla. Llénala con lo que consultaste en la Registraduría: documento, departamento, municipio, puesto, dirección y mesa. Si dudas de un documento, escribe Por confirmar y el motivo."
+  },
+  {
+   "id": "s3",
+   "zoom": 1.35,
+   "voz": "Luego toca Actualización masiva y elige el archivo. Antes de guardar, la app te muestra cuántos se actualizan, cuáles no están en la base y las primeras filas."
+  },
+  {
+   "id": "s4",
+   "zoom": 1.35,
+   "voz": "Toca Actualizar. Al terminar, descarga el respaldo: trae cómo estaban antes y, si algo salió mal, lo subes y todo vuelve a quedar como estaba."
+  },
+  {
+   "id": "s5",
+   "zoom": 1.4,
+   "voz": "Para cambiar a una persona de líder, toca el botón de las flechas, busca el nuevo líder y toca Reasignar. Para pasar a otra persona al mismo líder, basta un toque en Pasar a."
+  },
+  {
+   "id": "s6",
+   "zoom": 1.35,
+   "voz": "Si te quedas sin señal, la app te avisa con una franja. Tócala para ver qué puedes hacer: anotar contactos nuevos, que quedan guardados en este equipo."
+  },
+  {
+   "id": "s7",
+   "zoom": 1.4,
+   "voz": "Toca Agregar y escribe el documento, el nombre, el WhatsApp y el barrio. Mientras escribes, la app revisa el barrio y te sugiere el correcto; si el documento ya está en la base o en tus pendientes, te avisa. Toca Guardar en pendientes y sigue con el siguiente. El botón Pendientes te muestra cuántos llevas."
+  },
+  {
+   "id": "s8",
+   "zoom": 1.35,
+   "voz": "Cuando vuelve la señal, la franja se pone verde. Entra a Pendientes: la app revisa con el servidor si alguno ya existe y marca los listos. Si alguno tiene un error, lo corriges ahí mismo. Elige el líder destino y toca Subir: quedan en la base de datos, a nombre de ese líder."
+  },
+  {
+   "id": "s9",
+   "zoom": 1.35,
+   "voz": "Para sacar un listado, filtra lo que necesitas y toca Excel o PDF. Elige las columnas y descárgalo."
+  },
+  {
+   "id": "s10",
+   "zoom": 1.0,
+   "voz": "Con estas herramientas, cientos de registros se ordenan en minutos, haya o no haya señal."
+  }
+ ],
+ "mini": {
+  "texto": "Cientos en minutos",
+  "linea2": "Carga masiva y sin señal",
+  "escena_h": "s3",
+  "q_h": 0.85,
+  "recorte_h": [
+   0.3,
+   0.0,
+   0.7,
+   1.0
+  ],
+  "escena_v": "s3",
+  "q_v": 0.85
+ }
+}

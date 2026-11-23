@@ -143,6 +143,39 @@ def responder(accion, params, cuerpo):
         c = _fila(p.get('documento'))
         if c: PERSONAS.remove(c)
         return {'ok': True}
+    if accion == 'priv.puestoLote':
+        n, antes, faltan = 0, [], []
+        for f in p.get('filas', []):
+            c = _fila(f.get('d'))
+            if not c: faltan.append(f.get('d')); continue
+            antes.append([c['documento'], '', c['municipio'], c['puestoCrudo'], '', c['mesa'], c.get('motivo', '')])
+            mun = f.get('h', '')
+            c.update({'municipio': 'Villa Ejemplo' if mun == 'VILLA EJEMPLO' else (mun.title() if mun not in ('POR CONFIRMAR', 'A LA ESPERA') else mun),
+                      'puestoCrudo': f.get('i', ''), 'mesa': f.get('k', ''), 'motivo': f.get('m', '') if mun == 'POR CONFIRMAR' else '', 'fechaActualizacion': _fecha(dt.date.today())})
+            n += 1
+        return {'ok': True, 'n': n, 'antes': antes, 'noEncontrados': faltan, 'puestosNuevos': []}
+    if accion == 'priv.personaReasignar':
+        c = _fila(p.get('documento')); c['referencia'] = str(p.get('referencia')); c['fechaActualizacion'] = _fecha(dt.date.today())
+        return {'ok': True, 'card': c}
+    if accion == 'priv.bdPendRevisar':
+        docs = [d for d in str(p.get('docs', '')).split(',') if d]
+        res = []
+        for d in docs:
+            c = _fila(d)
+            lid = next((l for l in LIDERES if c and l['codigo'] == c.get('referencia')), None)
+            res.append({'d': d, 'e': bool(c), 'n': c['nombre'] if c else '', 'r': c.get('referencia', '') if c else '', 'l': lid['nombre'] if lid else '', 'mio': False})
+        return {'ok': True, 'res': res}
+    if accion == 'priv.bdNuevoLote':
+        lid = next((l for l in LIDERES if l['codigo'] == str(p.get('lider'))), LIDERES[0]); res, cards = [], []
+        for f in p.get('filas', []):
+            c = {'documento': f['d'], 'nombre': f['n'], 'residencia': f['b'], 'municipio': 'SIN CONSULTAR', 'intencion': '', 'estado': 'ACTIVO',
+                 'fechaRegistro': _fecha(dt.date.today()), 'fechaActualizacion': '', 'esLider': False, 'foto': '', 'puestoCrudo': '', 'mesa': '', 'motivo': '',
+                 'referencia': lid['codigo'], 'telefono': f.get('t', '')}
+            PERSONAS.append(c); cards.append(c); res.append({'d': f['d'], 'ok': True})
+        return {'ok': True, 'res': res, 'subidos': len(res), 'cards': cards, 'lider': lid}
+    if accion in ('priv.bdPdf', 'priv.bdExcel'):
+        import base64
+        return {'ok': True, 'base64': base64.b64encode(open('/home/claude/tut/assets/bd_ejemplo.pdf', 'rb').read()).decode(), 'mime': 'application/pdf', 'filename': 'BASE_DE_DATOS_VILLA_EJEMPLO.pdf'}
     if accion == 'priv.agenda':
         return {'ok': True, 'items': AGENDA, 'estricta': False, 'esDev': False}
     if accion == 'priv.agendaMeta':

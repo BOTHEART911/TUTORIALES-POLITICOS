@@ -84,23 +84,24 @@
    "orden": 4,
    "tema": "Base de datos",
    "titulo": "En bloque y sin señal",
-   "descripcion": "Carga y actualización masiva, reasignar líder, registrar sin internet, exportar, memoria y balance.",
+   "descripcion": "Carga masiva de puestos con plantilla y respaldo, reasignar líder, anotar sin señal y subir pendientes, exportar a Excel o PDF.",
    "rutas": [
     "bd"
    ],
    "palabras": [
     "masivo",
     "excel",
+    "plantilla",
+    "reasignar",
     "sin señal",
     "pendientes",
     "exportar",
-    "memoria",
-    "balance"
+    "pdf"
    ],
    "youtube": "",
    "short": "",
-   "shortImg": "",
-   "duracion": "",
+   "shortImg": "priv/img/P04v.jpg",
+   "duracion": "2:20",
    "activo": false
   },
   {
@@ -108,7 +109,7 @@
    "orden": 5,
    "tema": "Líderes",
    "titulo": "Registra y administra líderes",
-   "descripcion": "Agregar, tipo de líder, editar, tablero de puntaje y eliminar traspasando referidos.",
+   "descripcion": "Agregar, tipo de líder, editar, tablero de puntaje, memoria mensual, balance y eliminar traspasando referidos.",
    "rutas": [
     "lideres"
    ],
@@ -116,7 +117,9 @@
     "líder",
     "tablero",
     "eliminar líder",
-    "traspasar"
+    "traspasar",
+    "memoria",
+    "balance"
    ],
    "youtube": "",
    "short": "",

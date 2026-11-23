@@ -24,11 +24,28 @@ INTRO, OUTRO = 3.2, 4.2
 # ---------------- línea de tiempo ----------------
 frames = REC['frames']; fts = [f[0] for f in frames]
 marcas = REC['marcas']
+CORTES = REC.get('cortes', [])
+def _corte_en(a, b):
+    return sum(max(0, min(b, c1) - max(a, c0)) for c0, c1 in CORTES)
+def real_de(a, x):
+    """tiempo real tras 'x' segundos útiles desde 'a', saltando los cortes"""
+    t = a
+    for c0, c1 in sorted(CORTES):
+        if c1 <= t: continue
+        if c0 >= t + x: break
+        x -= max(0, c0 - t); t = c1
+    return t + x
+OTRO = f"{T}/rec/{ID}_{'v' if FMT == 'h' else 'h'}/rec.json"
+S_OTRO = {}
+if os.path.exists(OTRO):   # mismo ritmo en video y Short (capítulos iguales)
+    _R = json.load(open(OTRO)); _m = _R['marcas']; _c = _R.get('cortes', [])
+    for _i, (_n, _a) in enumerate(_m[:-1]):
+        _b = _m[_i + 1][1]; S_OTRO[_n] = _b - _a - sum(max(0, min(_b, c1) - max(_a, c0)) for c0, c1 in _c)
 esc = []
 t = INTRO
 for i, (nom, a) in enumerate(marcas[:-1]):
-    b = marcas[i + 1][1]; S = b - a; V = DUR[nom]
-    Tn = max(V + 0.75, S / 1.6)
+    b = marcas[i + 1][1]; S = b - a - _corte_en(a, b); V = DUR[nom]
+    Tn = max(V + 0.75, S / 1.6, S_OTRO.get(nom, 0) / 1.6)
     f = max(0.75, min(1.6, S / Tn))
     esc.append(dict(id=nom, a=a, S=S, T=Tn, f=f, t0=t, voz=t + 0.3)); t += Tn
 TOTAL = t + OUTRO
@@ -39,8 +56,8 @@ def src_en(tout):
     if tout < INTRO: return esc[0]['a']
     for e in esc:
         if tout < e['t0'] + e['T']:
-            return e['a'] + min((tout - e['t0']) * e['f'], e['S'] - 0.02)
-    return esc[-1]['a'] + esc[-1]['S'] - 0.02
+            return real_de(e['a'], min((tout - e['t0']) * e['f'], e['S'] - 0.02))
+    return real_de(esc[-1]['a'], esc[-1]['S'] - 0.02)
 
 
 # ---------------- capas fijas ----------------

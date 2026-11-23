@@ -88,7 +88,7 @@ class Grab:
         self.fmt, self.salida = fmt, salida
         os.makedirs(salida + '/frames', exist_ok=True)
         for f in os.listdir(salida + '/frames'): os.remove(os.path.join(salida, 'frames', f))
-        self.frames, self.marcas, self.log, self.cur = [], [], [], []
+        self.frames, self.marcas, self.log, self.cur, self.cortes = [], [], [], [], []
         self.srv = _servidor()
         self.pw = sync_playwright().start()
         self.br = self.pw.chromium.launch(args=['--force-color-profile=srgb', '--font-render-hinting=none'])
@@ -161,7 +161,7 @@ class Grab:
         self.marcas.append(('__fin', time.time()))
         try: self.cdp.send('Page.stopScreencast')
         except Exception: pass
-        json.dump({'frames': self.frames, 'marcas': self.marcas, 'fmt': self.fmt, 'cur': self.cur, 'vp': FORMATOS[self.fmt]['viewport']}, open(self.salida + '/rec.json', 'w'))
+        json.dump({'frames': self.frames, 'marcas': self.marcas, 'fmt': self.fmt, 'cur': self.cur, 'cortes': self.cortes, 'vp': FORMATOS[self.fmt]['viewport']}, open(self.salida + '/rec.json', 'w'))
         json.dump({'log': self.log, 'faltan': sorted(set(mock.FALTAN))}, open(self.salida + '/log.json', 'w'), ensure_ascii=False, indent=1)
         self.br.close(); self.pw.stop(); self.srv.shutdown(); self.srv.server_close()
 
@@ -244,3 +244,7 @@ class Grab:
           document.body.appendChild(d); }""", 'data:image/png;base64,' + data)
         self.espera(ms)
         self.js("() => { const d = document.getElementById('__pdf'); if (d) d.remove(); }")
+
+    def pausa(self, ms):
+        """Espera fuera de cámara: ese tramo se recorta del video."""
+        t0 = time.time(); self.espera(ms); self.cortes.append((t0, time.time()))
