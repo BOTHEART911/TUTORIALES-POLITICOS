@@ -326,7 +326,36 @@ def responder(accion, params, cuerpo):
                 r = sum(n[:j + 1]); f = round(r * (.25 + j * .04)); trab = round(r * (.4 + j * .06))
                 bal[l['codigo']][m] = [r, f, round(r * .05), round(r * .05), round(r * .02), max(0, trab - f - round(r * .12)), r - trab, trab]
         return {'ok': True, 'meses': M, 'hoy': M[-1], 'lid': lid, 'bal': bal, 'val': {}, 'bit': {}, 'generado': 'hace un momento', 'rv': {}}
+    if accion == 'priv.contactoBuscar':
+        q = str(p.get('q', '')).lower()
+        its = [{'documento': x['documento'], 'nombre': x['nombre'], 'contacto': x.get('telefono', '')} for x in PERSONAS if q in x['nombre'].lower()][:8]
+        return {'ok': True, 'items': its}
     if accion in ('priv.compromisos', 'priv.solicitudes'):
+        L = COMP if accion == 'priv.compromisos' else SOLI
+        cont = {}
+        for x in L: cont[x['estado']] = cont.get(x['estado'], 0) + 1
+        return {'ok': True, 'items': L, 'contadores': cont, 'plantilla': 'Hola [ASIGNADO] 👋 Te asignamos este compromiso con [NOMBRE]:%0A%0A[COMPROMISO]%0A%0APor favor cuéntanos cómo va.', 'rv': {}}
+    if accion in ('priv.compromisoVer', 'priv.solicitudVer'):
+        L = COMP if 'compromiso' in accion else SOLI; k = 'compromiso' if 'compromiso' in accion else 'solicitud'
+        return {'ok': True, k: next(x for x in L if str(x['id']) == str(p.get('id')))}
+    if accion in ('priv.compromisoGuardar', 'priv.solicitudGuardar'):
+        L = COMP if 'compromiso' in accion else SOLI
+        lid = next((l for l in LIDERES_FULL if l['nombre'] == p.get('asignado')), None)
+        per = _fila(p.get('nombreDoc')) or {}
+        c = {'id': str(500 + len(L)), 'nombre': p.get('nombre', ''), 'residencia': per.get('residencia', ''), 'compromiso': p.get('compromiso', ''), 'solicitud': p.get('solicitud', ''),
+             'asignado': p.get('asignado', ''), 'telefono': '573005551234', 'estado': 'ASIGNADO', 'usuarioNombre': 'Laura Gómez Ruiz', 'ts': int(dt.datetime.now().timestamp()*1000), 'traza': [], 'trazaResumen': '', 'foto': '', 'fotoAsg': '', 'contacto': per.get('telefono', '')}
+        if p.get('bitacora'): c['traza'] = [{'autor': 'Laura Gómez Ruiz', 'fecha': 'hoy', 'texto': p['bitacora'], 'origen': 'priv'}]
+        L.insert(0, c); return {'ok': True, 'card': c}
+    if accion in ('priv.compromisoEstado', 'priv.solicitudEstado'):
+        L = COMP if 'compromiso' in accion else SOLI; c = next(x for x in L if str(x['id']) == str(p.get('id'))); c['estado'] = p.get('estado'); return {'ok': True, 'card': c}
+    if accion in ('priv.compromisoTraza', 'priv.solicitudTraza'):
+        L = COMP if 'compromiso' in accion else SOLI; c = next(x for x in L if str(x['id']) == str(p.get('id')))
+        c['traza'] = c.get('traza', []) + [{'autor': 'Laura Gómez Ruiz', 'fecha': dt.datetime.now().strftime('%d/%m/%Y %I:%M %p').lower(), 'texto': p.get('texto', ''), 'origen': 'priv'}]
+        c['trazaResumen'] = 'Última: ' + p.get('texto', '')[:40]
+        return {'ok': True, 'entries': c['traza'], 'resumen': c['trazaResumen'], 'card': c}
+    if accion in ('priv.compromisoWaBot', 'priv.solicitudWaBot'):
+        return {'ok': True, 'msg': 'Enviado por el bot de WhatsApp'}
+    if accion in ('priv.lideres_x',):
         return {'ok': True, 'items': [], 'rv': {}}
     FALTAN.append(accion)
     return {'ok': True, 'items': []}
@@ -387,3 +416,20 @@ BITS = {'2': [
     {'id': 'B001', 'mes': '2026-10', 'fecha': '2026-10-21 18:40', 'autor': 'Laura Gómez Ruiz', 'refiere': 'Reunión con 12 vecinos del barrio La Esperanza.', 'compromiso': 'Traer el listado de la junta antes del viernes.', 'texto': '', 'propia': True},
     {'id': 'B002', 'mes': '2026-09', 'fecha': '2026-09-14 10:05', 'autor': 'Laura Gómez Ruiz', 'refiere': 'Visita casa a casa en la calle 8.', 'compromiso': 'Llamar a los 5 no contactados.', 'texto': '', 'propia': True}],
     '1': [{'id': 'B003', 'mes': '2026-10', 'fecha': '2026-10-02 17:20', 'autor': 'Laura Gómez Ruiz', 'refiere': 'Encuentro con madres comunitarias.', 'compromiso': 'Agendar jornada de salud.', 'texto': '', 'propia': True}]}
+
+
+def _cm(k, nom, res, txt, asg, est, dias, traza=None):
+    return {'id': str(k), 'nombre': nom, 'residencia': res, 'compromiso': txt, 'asignado': asg, 'telefono': '57300555' + str(4000 + k), 'estado': est,
+            'usuarioNombre': 'Laura Gómez Ruiz', 'ts': int((dt.datetime.now() - dt.timedelta(days=dias)).timestamp()*1000), 'traza': traza or [], 'trazaResumen': '', 'foto': '', 'fotoAsg': '', 'contacto': '57300555' + str(5000 + k)}
+COMP = [
+    _cm(1, 'María Peña Rojas', 'El Prado', 'Gestionar el arreglo de la luminaria de la calle 8.', 'Jorge Castro León', 'PENDIENTE', 12, [{'autor': 'Jorge Castro León', 'fecha': '10/11/2026 5:20 p. m.', 'texto': 'Ya se radicó la solicitud en la empresa de energía.', 'origen': 'pub'}]),
+    _cm(2, 'Héctor Duarte Cano', 'Centro', 'Acompañar la inscripción del hijo al programa de becas.', 'Ana Rojas Peña', 'CUMPLIDO', 20),
+    _cm(3, 'Gloria Silva Arias', 'Las Palmas', 'Llevar la propuesta del parque al concejo.', 'Paola Vargas Cruz', 'ASIGNADO', 3),
+    _cm(4, 'Nelson Ríos Moreno', 'Vereda El Llano', 'Revisar el estado de la vía veredal con la alcaldía.', 'Felipe Ortiz Ríos', 'PENDIENTE', 41),
+    _cm(5, 'Sandra Cruz León', 'San José', 'Conseguir cupo en la jornada de salud.', 'Camila Peña Torres', 'CUMPLIDO', 9),
+    _cm(6, 'Iván Torres Mejía', 'La Esperanza', 'Gestionar arreglo del alcantarillado.', 'Jorge Castro León', 'DESCARTADO', 30)]
+def _sl(k, txt, asg, est, dias):
+    c = _cm(k, '', '', '', asg, est, dias); c['solicitud'] = txt; return c
+SOLI = [_sl(101, 'Convocar a tus referidos a la caminata del sábado.', 'Ana Rojas Peña', 'ASIGNADO', 1),
+        _sl(102, 'Actualizar la intención de voto de tus referidos sin preguntar.', 'Jorge Castro León', 'PENDIENTE', 6),
+        _sl(103, 'Enviar fotos de la reunión del barrio para redes.', 'Paola Vargas Cruz', 'CUMPLIDO', 10)]

@@ -175,7 +175,7 @@
    "orden": 8,
    "tema": "Gestión",
    "titulo": "Compromisos y solicitudes",
-   "descripcion": "Estados, envíos y paso de una a otra.",
+   "descripcion": "Crea compromisos desde la base, anota avances en la bitácora, envíalos al asignado y pide cosas a los líderes con solicitudes.",
    "rutas": [
     "compromisos",
     "solicitudes"
@@ -187,8 +187,8 @@
    ],
    "youtube": "",
    "short": "",
-   "shortImg": "",
-   "duracion": "",
+   "shortImg": "priv/img/P08v.jpg",
+   "duracion": "1:45",
    "activo": false
   },
   {

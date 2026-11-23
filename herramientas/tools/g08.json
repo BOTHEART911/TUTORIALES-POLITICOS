@@ -1,0 +1,17 @@
+{
+ "id": "T08",
+ "titulo": "Compromisos y solicitudes",
+ "sub": "Lo que la campaña promete y lo que les pide a los líderes",
+ "num": 8,
+ "siguiente": "Formularios y Ponte al día",
+ "escenas": [
+  {"id": "s1", "zoom": 1.15, "voz": "En Compromisos queda todo lo que la campaña se comprometió a hacer por una persona. Arriba ves cuántos hay asignados, pendientes, cumplidos y descartados, y el porcentaje de cumplimiento. Las pastillas filtran por estado, y cada tarjeta dice quién lo creó, cuántas notas tiene en la bitácora y hace cuántos días está abierto."},
+  {"id": "s2", "zoom": 1.35, "voz": "Para agregar uno, toca Agregar. Busca a la persona en la base por nombre o documento, escribe el compromiso y elige a quién se le asigna, también de la base. Toca Crear compromiso y aparece de primero en la lista."},
+  {"id": "s3", "zoom": 1.35, "voz": "En Detalles está todo el compromiso y su bitácora: cada avance queda anotado con autor y fecha, tanto lo que escribe el panel como lo que reporta el líder. Escribe la novedad y toca Agregar a la bitácora."},
+  {"id": "s4", "zoom": 1.35, "voz": "Con Enviar le mandas el compromiso al asignado con el mensaje listo, que puedes ajustar. Ábrelo en WhatsApp directo, o envíalo por el bot: toca dos veces para confirmar."},
+  {"id": "s5", "zoom": 1.35, "voz": "Cuando se cumpla, toca Estado y márcalo como Cumplido. Los contadores y el porcentaje de cumplimiento se actualizan al instante."},
+  {"id": "s6", "zoom": 1.3, "voz": "Solicitudes es la gemela liviana: aquí la campaña le pide algo a un líder, como convocar a sus referidos. Toca Nueva, escribe la solicitud, elige al líder, deja una primera nota si quieres y toca Crear solicitud. Tiene los mismos estados, bitácora y envío."},
+  {"id": "s7", "zoom": 1.0, "voz": "Así ningún compromiso se queda en el aire: cada uno tiene responsable, seguimiento y estado a la vista del equipo."}
+ ],
+ "mini": {"texto": "Cumple lo que prometes", "linea2": "Compromisos y solicitudes", "escena_h": "s1", "q_h": 0.55, "recorte_h": [0.05, 0.08, 0.95, 0.98], "escena_v": "s1", "q_v": 0.5}
+}

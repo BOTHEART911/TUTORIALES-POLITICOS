@@ -1,0 +1,62 @@
+"""T08 · Compromisos y solicitudes — grabación (h | v)."""
+import sys, os
+sys.path.insert(0, os.path.dirname(__file__))
+from rec import Grab
+FMT = sys.argv[1]
+g = Grab(FMT, f'/home/claude/tut/rec/T08_{FMT}')
+g.entrar(ruta='#/compromisos'); g.espera(1800)
+g.grabar()
+
+g.marca('s1')
+g.espera(500); g.mover('.cm-kpis', 800); g.espera(1200)
+g.mover('.cm-prog', 700); g.espera(1000)
+g.tap('#cm-chips .bd-chip[data-f="Pendiente"]', despues=1300)
+g.tap('#cm-chips .bd-chip[data-f="Todos"]', despues=800)
+g.mover('.cm-card[data-id="1"] .cm-sub', 700); g.espera(1000)
+g.mover('.cm-card[data-id="1"] .cm-foot', 700); g.espera(1200)
+
+g.marca('s2')
+g.tap('#cm-add', despues=1400)
+g.escribir('#cm-fnom', 'Ana Moreno', 70); g.espera(900)
+g.tap('#cm-fnom-list .combo-opt >> nth=0', despues=600)
+g.escribir('#cm-fcomp', 'Gestionar el cupo para el curso de modistería del SENA.', 30); g.espera(400)
+g.escribir('#cm-fasig', 'Paola', 90); g.espera(900)
+g.tap('#cm-fasig-list .combo-opt >> nth=0', despues=600)
+g.tap('#cm-save', despues=2200)
+
+g.marca('s3')
+g.pausa(900)
+g.tap('.cm-card[data-id="1"] .bd-btn[data-a="detalles"]', despues=2000)
+g.mover('#cm-tz-list', 700); g.espera(1500)
+g.escribir('#cm-tz-in', 'La empresa de energía programó la visita para el jueves.', 30); g.espera(300)
+g.tap('#cm-tz-add', despues=1800)
+g.js("() => closeLayer()"); g.espera(500)
+
+g.marca('s4')
+g.tap('.cm-card[data-id="1"] .bd-btn[data-a="enviar"]', despues=1800)
+g.mover('#cm-msg', 700); g.espera(1400)
+g.tap('#cm-wa-dir', despues=300)
+g.ver_mensaje(3000)
+g.tap('#cm-wa-bot', despues=900)
+g.tap('#cm-wa-bot', despues=1800)
+
+g.marca('s5')
+g.pausa(600)
+g.tap('.cm-card[data-id="1"] .bd-btn[data-a="estado"]', despues=1200)
+g.tap('.estado-opt[data-e="CUMPLIDO"]', despues=1600)
+g.mover('.cm-prog', 700); g.espera(1500)
+
+g.marca('s6')
+g.tap('#cm-ir-sol', despues=2000)
+g.mover('.cm-card >> nth=0', 700); g.espera(1200)
+g.tap('#sl-add', despues=1400)
+g.escribir('#sl-fsol', 'Confirmar cuántos referidos llevas al evento del domingo.', 30); g.espera(300)
+g.escribir('#sl-fasig', 'Jorge Cas', 90); g.espera(900)
+g.tap('#sl-fasig-list .combo-opt >> nth=0', despues=500)
+g.escribir('#sl-fbita', 'Recordarle el lunes.', 40); g.espera(300)
+g.tap('#sl-save', despues=2200)
+
+g.marca('s7')
+g.espera(2500)
+g.fin()
+print(open(f'/home/claude/tut/rec/T08_{FMT}/log.json').read())
