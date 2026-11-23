@@ -1,0 +1,16 @@
+{
+ "id": "T12",
+ "titulo": "Mi Bot de WhatsApp",
+ "sub": "Conecta, controla y cuida el bot de la campaña",
+ "num": 12,
+ "siguiente": "",
+ "escenas": [
+  {"id": "s1", "zoom": 1.25, "voz": "En Mi Bot manejas el bot de WhatsApp de la campaña. Arriba está su estado: en rojo, desconectado; en verde, conectado y respondiendo. El botón de la derecha lo vuelve a consultar."},
+  {"id": "s2", "zoom": 1.3, "voz": "Para conectarlo, toca Inicializar conexión y aparece el código QR. En el celular del bot abre WhatsApp, entra a Dispositivos vinculados y escanéalo. Si el código vence, toca Regenerar QR. Al actualizar, el estado pasa a conectado."},
+  {"id": "s3", "zoom": 1.3, "voz": "En Controles puedes reiniciar el bot sin perder la sesión, o silenciarlo para que deje de responder por un rato. Eliminar sesión lo desconecta del todo: úsalo antes de volver a escanear si quedó vinculado en bucle."},
+  {"id": "s4", "zoom": 1.3, "voz": "Para un contacto, escribe su número con el código del país. Con Bloquear, el bot deja de responderle; con Limpiar conversación se borra su historial en el bot."},
+  {"id": "s5", "zoom": 1.3, "voz": "Abajo está la lista de números bloqueados. Toca el chulo de uno para desbloquearlo y el bot vuelve a responderle."},
+  {"id": "s6", "zoom": 1.0, "voz": "Con esto terminas la serie: ya conoces todo el panel privado. Repasa cualquier tutorial cuando lo necesites."}
+ ],
+ "mini": {"texto": "Tu bot, bajo control", "linea2": "Mi Bot de WhatsApp", "escena_h": "s3", "q_h": 0.03, "recorte_h": [0.05, 0.05, 0.95, 0.95], "escena_v": "s2", "q_v": 0.97}
+}

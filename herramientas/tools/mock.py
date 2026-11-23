@@ -433,6 +433,28 @@ def responder(accion, params, cuerpo):
         pin = next((k for k, v in USUARIOS.items() if v['documento'] == u['documento']), '····')
         txt = CFG['PLANTILLA_BIENVENIDA_PRIV'].replace('{nombre}', u['nombre'].split()[0]).replace('{clave}', pin).replace('{enlace}', CFG['APP_PRIVADA_URL'])
         return {'ok': True, 'usuarios': CF_USERS, 'numero': '57' + u['whatsapp'], 'texto': txt, 'msg': 'Bienvenida enviada por el bot'}
+    if accion == 'priv.botEstado':
+        st = 'ONLINE' if BOT['qr'] >= 1 else 'OFFLINE'
+        return {'ok': True, 'configurado': True, 'status': st, 'silenciado': BOT['mute']}
+    if accion == 'priv.botQR':
+        import base64 as _b
+        BOT['qr'] = 1
+        return {'ok': True, 'qr': 'data:image/png;base64,' + _b.b64encode(open('/home/claude/tut/assets/qr_ejemplo.png', 'rb').read()).decode()}
+    if accion == 'priv.botReiniciar':
+        return {'ok': True, 'msg': 'Bot reiniciado'}
+    if accion == 'priv.botMute':
+        BOT['mute'] = bool(p.get('flag')) and str(p.get('flag')).lower() != 'false'
+        return {'ok': True, 'msg': 'Bot silenciado: no responde a nadie' if BOT['mute'] else 'Bot activo de nuevo'}
+    if accion == 'priv.botEliminarSesion':
+        BOT['qr'] = 0; return {'ok': True, 'msg': 'Sesión eliminada'}
+    if accion == 'priv.botBloquear':
+        n = str(p.get('numero')); BOT['bl'].append(n) if n not in BOT['bl'] else None; return {'ok': True, 'msg': 'Número bloqueado'}
+    if accion == 'priv.botDesbloquear':
+        n = str(p.get('numero')); BOT['bl'] = [x for x in BOT['bl'] if x != n]; return {'ok': True, 'msg': 'Número desbloqueado'}
+    if accion == 'priv.botLimpiar':
+        return {'ok': True, 'msg': 'Conversación limpiada'}
+    if accion == 'priv.botBlacklist':
+        return {'ok': True, 'configurado': True, 'phones': BOT['bl']}
     if accion in ('priv.lideres_x',):
         return {'ok': True, 'items': [], 'rv': {}}
     FALTAN.append(accion)
@@ -634,3 +656,5 @@ for _v in PERM_CAT:
     for _i in _v['items']: _PFAM[_i['k']] = _i.get('fam')
     for _g in _v.get('grupos', []):
         for _i in _g['items']: _PFAM[_i['k']] = _i.get('fam')
+
+BOT = {'qr': 0, 'mute': False, 'bl': ['573005550911', '573005550432']}

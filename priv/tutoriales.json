@@ -263,7 +263,7 @@
    "orden": 12,
    "tema": "Administración",
    "titulo": "Mi Bot de WhatsApp",
-   "descripcion": "Conectar con QR, controles y bloqueos.",
+   "descripcion": "Conecta el bot con el QR, reinícialo o silencialo, y bloquea, desbloquea o limpia conversaciones.",
    "rutas": [
     "mibot"
    ],
@@ -274,8 +274,8 @@
    ],
    "youtube": "",
    "short": "",
-   "shortImg": "",
-   "duracion": "",
+   "shortImg": "priv/img/P12v.jpg",
+   "duracion": "1:25",
    "activo": false
   }
  ]
