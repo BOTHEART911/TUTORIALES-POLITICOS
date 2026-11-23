@@ -164,11 +164,11 @@
     "evento",
     "asistentes"
    ],
-   "youtube": "",
-   "short": "",
+   "youtube": "https://youtu.be/uAJyyoxXCSU",
+   "short": "https://youtube.com/shorts/IUGJ1nevjB4",
    "shortImg": "priv/img/P07v.jpg",
    "duracion": "1:56",
-   "activo": false
+   "activo": true
   },
   {
    "id": "P08",
