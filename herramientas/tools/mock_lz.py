@@ -91,7 +91,7 @@ def _pc():
     for r in REFS:
         if r['municipio'] == 'POR CONFIRMAR':
             m = MOTIVOS_PC.setdefault(r['documento'], 'NO APARECE EN CENSO' if not MOTIVOS_PC else 'MUERTE')
-            items.append({'d': r['documento'], 'n': r['nombre'], 'm': m, 'g': '12', 't': r['contacto'], 'r': r['residencia']})
+            items.append({'d': r['documento'], 'n': r['nombre'], 'm': m, 'g': '12', 't': '', 'r': r['residencia']})
     return {'ok': True, 'n': len(items), 'items': items, 'grupos': [{'codigo': '12', 'nombre': LIDER['nombre'], 'propio': True}]}
 
 
