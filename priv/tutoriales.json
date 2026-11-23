@@ -142,11 +142,11 @@
     "bitácora",
     "ahijados"
    ],
-   "youtube": "",
-   "short": "",
+   "youtube": "https://youtu.be/LeK12A6SelY",
+   "short": "https://youtube.com/shorts/4edeTU3ljFQ",
    "shortImg": "priv/img/P06v.jpg",
    "duracion": "1:58",
-   "activo": false
+   "activo": true
   },
   {
    "id": "P07",
